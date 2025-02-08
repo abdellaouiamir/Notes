@@ -1,0 +1,2 @@
+compress file.tar
+uncompress file.tar.Z

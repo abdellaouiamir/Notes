@@ -1,0 +1,5 @@
+# mid compress rate mid execute time
+# GNU ZIP
+gzip archive.tar
+# GNU UNZIP
+gunzip archive.tar.gz

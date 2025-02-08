@@ -1,0 +1,5 @@
+lsblk
+fdisk -l
+cfdisk
+# c for charectere by carectere device . mouse keyboard
+# b for bloc charectere device . storage

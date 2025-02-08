@@ -1,0 +1,475 @@
+# Config
+git config --list --local
+git config --list --global
+# git config --add --local <section>.<name>
+git config --add --global user.name "my name"
+git config --get user.name
+git config --add --local web.ceo test
+git config --add --local web.ceo test2
+git config --unset-all web.ceo
+git config --add --local web.ctl bbb
+git config --unset --local web.ctl
+git config --remove-section web
+git config --add --local init.defaultBranch master
+
+# Branch
+# the branch tips all the latest commit of branch
+git branch
+git branch -a # list all the local and remote branches
+git branch -m oldName newName
+git branch -M oldName newName # force rename branch
+git branch new-branch-name
+git switch -c new-branch-name
+git switch -c new-branch-name COMMITHASH
+git checkout -b new-branch-name
+git switch branch-name
+git checkout branch-name
+git branch -d branch-name
+git branch -D branch # force delete branch
+
+# commit
+git status 
+git add .
+git commit -m "meesqge"
+git commit --amend --on-edit # commit u changes to the current commit without create a new commit
+
+# Log
+git log --oneline
+git log --oneline --graph
+git log --decorate=no
+git log --decorate=full
+git log --oneline --graph --all # log for all the branch
+git log --oneline --graph --decorate --parents
+git log --oneline --graph --decorate --parents branch_name2 branch-name
+git log -p -1 # to see the changes from the previous commit
+
+# merge
+# in merge git will create a new commit
+# merge commit have two parents
+git merge branch-name # run this command in the branch that will get the modification from other branch
+      C                 C
+     /               /     \
+A - B - D  ==>  A - B - D - E
+git log --oneline --graph --decorate --parents
+# delte the merged branch 
+git merge their_branch
+
+
+# fast forward merge
+# it happen when the tips of the main branch are the parent of the tips of the other branch so git it will just moves the pointer of the base branch to the tip of the freature branch
+      C
+     /
+A - B       ==> A - B - C 
+
+# rebase
+# before rebase
+A - B - C         main
+    \
+     D - E        futre branch
+# after rebase     
+A - B - C            main
+         \
+          D - E      future branch
+# u are in feature branch          
+git rebase main
+          
+# reset
+git reset --soft COMMITHASH # or u can HEAD~1 to go back to the previous commit and the current commit will be stage with the soft option
+git reset --hard # undo all the change and go back to the current commit . it delete the stage. the untracke file are unchanged because git doesn t know about them
+git reset --hard COMMITHASH# undo all the change and go back to the commithash .
+git reset --soft HEAD~1 # reset to the previous commit and stage the changes
+git reset --hard HEAD~1 # reset to the previous commit without stage the chagnes
+# diff
+git diff # it will show u the difference between the current working tree
+git diff file_path # the same thing but just for the file u provide it
+git diff --staged # see the diffrence between the last commit and the stage
+git diff -p --oneline -1 # see the diffirence in the current commit and the previous commit
+git diff --oneline -p -1 main # the last commit
+
+# remote
+git remote add origin path # add your remote repository it can be in u system path not url
+git remote rm origin # remote the remote repo
+git remote -v # list the remote repo
+git fetch # download the latest changes fron the remote repo # u need to perform merge after fetch
+git fetch origin
+git merge origin/main # origin is the repo and remotes have all the remote repo
+git log origin/main # to see the log of remote branch # origin is a repo # repo is a collection of commits# a branch is just a pointer to a commit
+
+git push origin main # push local change to the remote . u can push new created branch to the remote repo
+git push origin local_branch:remote_branch # u can push to different branch
+git push origin main --force # it force github to rewrite the history of the requested branch . don t run this command in the maim or u will rewrite the history
+# of the branch u are pushing to it . don t try this in main or u will be fired
+
+# github
+git remote add origin url
+git ls-remote 
+
+  471  git remote add https://github.com/abdellaouiamir/test-git.git
+  473  git remote add origin https://github.com/abdellaouiamir/test-git.git
+  474  git remote -v
+  475* nvim git.txt
+  476  git ls-remote
+  477  git push origin main # push the chanege from the branch main to the remote repo origin
+  479  git switch main
+  480  git merge update_dune
+  # branch divergent because the remote main and the local main have different commits
+  483  git config --local pull.rebase false
+  484  git pull origin main
+  485  git log --oneline --graph --parents
+
+  473  git remote add origin https://github.com/abdellaouiamir/test-git.git
+  474  git remote -v
+  475* nvim git.txt
+  476  git ls-remote
+  477  git push origin main
+  479  git switch main
+  480  git merge update_dune
+  483  git config --local pull.rebase false
+  484  git pull origin main
+  485  git log --oneline --graph --parents
+  487  git switch -c add_test
+  488  nvim content.md
+  489  git add .
+  490  git commit -m
+  491  git commit -m "the eleven commit"
+  492  git push origin add_test
+
+
+# git pull update the current selected branche be carful when u use it it run git merge branch_name to the current branch
+# git pull is the same as running git fetch and then run git merge origin/main
+git pull origin main # if u get a "divergent branch" add this to the config 
+    ||
+git fetch origin
+git merge origin/main
+git config --local pull.rebase false
+
+# git config --global pull.rebase true
+git pull --rebase origin main
+# i configure git pull to rebase on pull rather than merge to keep my history linear and clean
+Possible Outcomes Based on Your Git Settings
+1. If pull.rebase = false (Default Behavior)
+
+    Git will do a merge between main and your feature branch.
+    A new merge commit will be created if there are new changes in main.
+    If there are conflicts, Git will prompt you to resolve them manually.
+
+2. If pull.rebase = true
+
+    Git will rebase your feature branch on top of the latest main.
+    Your local commits will be rewritten to apply them after main's latest commits.
+    If there are conflicts, Git will pause and ask you to resolve them.
+
+
+# .gitignore
+# .git/info/exclude # to add custom file to ignore for u locally and they don t need to be in the .gitignore file
+# u can have multiple .gitignore in u project and each one apply on it s directory and subdirecotry if it doesn t have .gitignore file
+# example
+*.txt # exclude any .txt file
+/file.py # exclue only that path 
+dirctory # exlcue and directory that have the same name
+file.file # exlude any file that have the same name
+!example.txt # ignore every thing unless it example.txt
+
+
+# fork
+# fork is a feature provide it by github . it s a copy of another one repo to u account. and do any change to it .
+# 1 . fork the repo
+# 2 . clone the repo from u github accont 
+# 3 . create new breanch 
+# 4 . commit u changes
+# 5 . push u branch to u repo
+# 6 . open a PR to the repo u want to contrubite to it # pr = pull request
+
+# git reflog
+register whre u HEAD was over time
+git the histroy of u git repo over time
+# how to recover lost change # when u delete a branch u didn t merge with the main branch
+# bad way 
+  git reflog
+  git cat-file -p 12fb039
+  git cat-file -p ace275
+  git cat-file -p 03478
+copy the the content of the deleted file
+# u can use merge
+git switch main
+git merge 12fb039
+# 
+git merge HEAD@{1}
+# HEAD@{1} is refernce the previous location of the head 0 for the cuurent position
+
+
+
+# merge conflit
+git merge feature
+# u git merge conflit
+git merge --abort # to cancel the merge
+# solve the conflit
+git status # it will tell u the files that have conflit
+git diff # to show the diffrence or whre the conflit
+# go to each file and solve the conflit
+<<<<<<<< HEAD
+  teif
+  fjeif
+========
+  eieif
+  iefj
+>>>>>>> maim  
+# HEAD for u current position
+# u can add both changes 
+# just delete the lines that git add it and then
+git add .
+git commit -m "merge conflit resolve it"
+# git will autmaticly relove the confilt and u commit will the merge commit
+
+# 
+git merge thier
+# u can use --thirs and --ours with checkout to solve the mgerge conflit
+git merge feature
+git checkout --theirs path_to_file # to keep thier change the feature branch
+git checkout --ours path_to_file # to keep our changes the cuurent branch
+git add .
+git commit -m "message"
+
+# git rebase conflit
+git rebase main # run it when u are in main 
+# confilt occurent
+git status
+git diff
+# be carfult when resolve the conflit in rebase beacuse HEAD point to the branche u want to rebse to it in this case it s main and thiers for the branch u are in 
+# because rebase when u run it will checkout the branch you wanto to rebase to it and rebase u branch . so rebaser rewrite git history and if the commit of this 
+# doesn t add any value rebase will delete check boot.dev git tutorial in 3:10:00
+git checkout --ours path # for the branch u wan to to rebase to it equvalent to HEAD = ours
+git checkout --thiers path # for u cuurent branch 
+# after resolve the conflit 
+git add .
+git rebase --continue
+## git rebase --abort # git rebase --skip
+!!!!!!!  if u run "git commit -m "message" " insted of running "git rebase --continue " u can relove or undo it by running "git reset --soft HEAD~1"
+
+# git rerere is the most op and hidden feature of git
+# reuse recorded resolution
+# resolve the conflit automaticly based on preresolved one for the specfic file
+git config --add --local rerere.enabled false # change to true for git to save u previous conflit chose and do it autmaticly
+# rm -rf .git/rr-cache
+
+# Squashing
+A-B-C-D
+  | / /
+A-x
+# all the commits b,c and d become one commit x .
+git rebase -i HEAD~3 # squashe the last three commit into one commit. it actual create a new commit and rebase it. so thats why we use rebase
+# git will open u editor change the commits u want to squashe and change pick to squash or just s and preserve the commit u want all the commit to squashe into 
+# it it should be the first line commit wich refer to the oldest one in the tree history
+  816  git rebase -i HEAD~3
+  818  git branch -D main
+  819  git branch -m temp_main main
+# git rebase -i HEAD~N # this command will rewrite the last 3 command from the cuurent head
+# if u want to squashe just make sure the first commit set to pick and the other to squashe the inline the oldest to the newest . the first line is the old one
+# example
+    873  git add .
+  874  git status
+  875  git commit -m "M: i mastering the git rebase"
+  877  git rebase -i HEAD~3
+  878  git log --oneline
+  879  git log --oneline -p -1
+  880  clear
+  881  git push origin add_scanner
+  882  git switch main
+  883  git branch -D add_scanner
+  884  git pull origin main
+  885  git log --oneline --graph --parents --all
+
+ 
+# tips
+add and upstream repo to point to the main repo to make sure always have the latets changes
+u github repo will be linked to origin
+
+# Rem
+HEAD mean where me at now
+cat .git/HEAD
+find .git/objects
+cat .git/refs/heads/main #
+cat .git/refs/heads/add_classic # have the same commit pointer
+git cat-file -p 4fdd # blob for file and tree for directory pri .
+
+
+
+
+
+
+
+
+
+
+
+
+# STASH
+# git stash is git feature that take u staged and unstaged changes and save them as a commit in the stash
+# stach is stack data type to when u pop stach it give the last one add it
+# stack LIFO
+git stash 
+git stash -m "message" # it will stash u changes with the message as description like git commit -m "message"
+git stash list
+git stash list -p # show to diff between u current working directory and the last stash commit
+git stash pop # it will apply u changes and delete it from the stack
+git stash apply # it like the pop but it will not delete the stash
+git stash drop # delete the stash without apply it
+# reference a spesific stash
+git stash apply stash@{2}
+git stash drop stash@{2}
+
+git add .
+# stash conflit resolve
+++<<<<<<< Updated upstream
+ +# megacorp  | good marketing example
+ +
+ +Megacorp is the entreprise customer Relationship management (CRM) software.
+++=======
++ # megacorp | bad marketing example
++
++ unite marketing, sales, and service in single app. the Megacorp start the changes .
+++>>>>>>> Stashed changes
+
+#the updated upstream it is u current change or u current woking tree
+# after resolve the conflit run git add . then git commit -m "eifj"
+
+
+# git revert
+# git revert it lie the cmplement in math , it will create a new commit that revert the changes of the giving commit 1/2 * 2
+git revert commit-hash
+git log --oneline -p -2
+git diff commit-hash-1 commit-hash-2
+
+
+# Conflit in git 
+# when a conflit appeare in git always run this command
+git status
+git diff
+git add .
+# to get a beete idea where u find the conflit and correct them
+
+# git commit --amend
+# modify the last commit
+
+
+# git diff
+git diff # see the difference between u working tree and the last commit
+git diff HEAD~1 # see the difference between u woking state and the previous commit
+git diff commit-hash-1 commit-hash-2
+
+
+
+##########
+git reset --soft # undo the commit but keep the chnages staged
+git reset --hard # undo the commit and discard the changes
+git revert # create a new commit that undo a previous commit
+
+reset for u branch
+revert for shared branch that will undo the changes of old commit
+
+
+# cherry pick
+# make sure before u run the cherry-pick command u need to be in clear working tree
+git cherry-pick commitsh
+# when therese conflit
+# resolve the conflit and the run
+git add .
+git cherry-pick --continue
+# to abort
+git cherry-pick --abort
+
+# bisect
+git bisect start
+# bisect is binary search the bad commit each time it will checkout to the middel commit and wait for u to tell her if it s good or not
+# if u provide u didn t provide the commit hash it will automaticly take the current commit hash
+git bisect good <commitish>
+git bisect bad <commitish>
+git bisect good
+git bisect bad
+git bisect
+# after u find the bad commit run the next command 
+git bisect reset
+# run git commit revert after u pack the bad commit hash that u have get it from bisect 
+# to see who wrote the commit
+git blame
+git show HASH command
+# auto bisect it will run the provided it scrupt to test if the commit is bad or good
+# run it after / git bisect start / git bisect bad commitish / git bisect good commitish # i mean u need to provide the head and the tail
+git bisect run ./scripts/bisect.sh 
+
+ ➜ megacorp ( main) ? 𝘹 git log --oneline
+45242db (HEAD -> main) P: Revert "K: i love git reset --soft"
+6194910 O: oops i am bad
+78f68cb N: Revert "M: i love reading"
+fda1728 M: i love reading
+e229f7e L: the L stand for lovely reading with big brother
+cbc9268 (origin/main, origin/HEAD) Merge pull request #1 from abdellaouiamir/add_scanner
+fc77d95 (origin/add_scanner) K: i love git reset --soft
+b8dcb84 J: redacted
+5f6a83d H: i am genious
+23d5a1f G: i am in main
+9262a8f F: try multi merge conflit
+7afdab8 E: resolve conflit
+acb24ad D: fourth commit
+1779f65 C: the third commit
+9cfa9b7 (origin/add_contrib) add myself as a contributor
+0d16f95 (upstream/main, upstream/HEAD) A: The Founding of MegaCorp and the End of Art
+ ➜ megacorp ( main) ? 𝘹 git bisec start
+git: 'bisec' is not a git command. See 'git --help'.
+ ➜ megacorp ( main) ? 𝘹 git bisec bad
+git: 'bisec' is not a git command. See 'git --help'.
+ ➜ megacorp ( main) ? 𝘹 git bisect start
+status: waiting for both good and bad commits
+ ➜ megacorp ( main)(BISECTING)  ? 𝘹 git bisect bad
+status: waiting for good commit(s), bad commit known
+ ➜ megacorp ( main)(BISECTING)  ? 𝘹 git bisect good 0d16f95
+Bisecting: 7 revisions left to test after this (roughly 3 steps)
+[5f6a83d4ec9e566226f8b8fe4b33be06ce1ac18b] H: i am genious
+ ➜ megacorp ( HEAD)(BISECTING)  ? 𝘹
+
+
+
+# Working Tree
+# work tree is bascilly u working directory that contane the tracked and untracked files
+# ls .git/worktrees 
+# it will list all the worktree linked to this repo
+
+git worktree list
+
+# the main worktree containt a .git/ directory containt all the git history
+# the linked worktree containt a .git with path to the main working tree
+# complicted to work with env file and secrets and node modules
+
+git worktree add <path> <branch>
+
+# if u just provide the path it will use the last path directory as default branch name for the new working tree
+# u can t open the same branch in two work tree in the same time
+git branch
+# the + before the branch_name it tell u that this branch open in another working tree
+# the * for the current working tree
+
+git worktree remove worktree_name
+# is the same as remove the directory manually and than run 
+git worktree prune
+
+# tags
+
+
+
+
+######################################
+git rm --cached <file>
+git check-ignore -v file
+git ls-files
+git rm --cached
+git remote set-url repo url # change remote repo url
+###################### run this after u change the default branch name in github
+git branch -m master main
+git fetch origin
+git branch -u origin/main main
+git remote set-head origin -a
+#####################
+git branch -u origin/main main
+git push -u origin main 
+git remote set-url origin url
+push origin --delete master

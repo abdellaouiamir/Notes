@@ -1,0 +1,66 @@
+# user  /etc/passwd  /etc/shadow
+passwd
+useradd -m -s /bin/bash -aG group_name user_name
+sudo useradd -m -s /bin/bash -g default_group -G users,input -c "Full Name" -U username
+useradd -M -r -s /bin/nologin system_user_name
+usermod
+userdel -r -f username # r for delte home directory for the user and f to force delete when the user is logged in or have same running process under his account
+chsh -s /bin/zsh
+passwd username # for root user
+
+
+# useradd and usermod options
+    useradd | usermod
+-u UID	✅	✅	Set or change the user ID (UID).
+-g GROUP	✅	✅	Set or change the primary group.
+-G GROUPS	✅	✅	Add user to additional groups (comma-separated).
+-c "Comment"	✅	✅	Add or change a comment (full name, description).
+-d /home/path	✅	✅	Set or change the home directory.
+-s /bin/bash	✅	✅	Set or change the shell.
+-e YYYY-MM-DD	✅	✅	Set or change account expiration date.
+-f DAYS	✅	✅	Set or change days before permanent lock after password expires.
+-m	✅	❌	Create a home directory (only in useradd).
+-U	✅	❌	Create a group with the same name as the user (only in useradd).
+-L	❌	✅	Lock a user account (disable login).
+-U	❌	✅	Unlock a locked user account.
+-a	❌	✅	Append to additional groups (used with -G).
+-l newname	❌	✅	Change the username.
+-p PASSWORD	✅	✅	Set or change the password (encrypted format).
+
+# password
+chage
+# chage
+-d DATE	Set the last password change date (format: YYYY-MM-DD).	sudo chage -d 2024-01-01 john
+-E DATE	Set the account expiration date (format: YYYY-MM-DD).	sudo chage -E 2025-01-01 john
+-I DAYS	Set the inactive days before the account is locked after password expiration.	sudo chage -I 30 john
+-m DAYS	Set the minimum number of days before a password can be changed.	sudo chage -m 7 john
+-M DAYS	Set the maximum number of days before a password must be changed.	sudo chage -M 90 john
+-W DAYS	Set the warning period before password expiration.	sudo chage -W 14 john
+-l	Show the current password aging information for a user.	sudo chage -l john
+
+sudo nano /etc/security/pwquality.conf
+minlen = 12             # Minimum password length
+dcredit = -1            # At least 1 digit
+ucredit = -1            # At least 1 uppercase letter
+lcredit = -1            # At least 1 lowercase letter
+ocredit = -1            # At least 1 special character
+
+
+# group  /etc/group /etc/gshadow
+
+groupadd -g group_id group_name
+groupdel group_name
+groupmod -g group_id group_name
+groupmod -n group_old_name group_new_name
+gpasswd -d user_name group_name # delete a user from a group
+
+
+# info
+id
+groups
+whoami
+w
+who
+last
+su # switch user # su - # used for root
+

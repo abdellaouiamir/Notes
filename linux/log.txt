@@ -1,0 +1,11 @@
+# /var/log  by default all the login of the host are saved here
+
+# /etc/logrotate.conf  to configure the rate of archive the log and auto clean the old one
+
+tail -f /var/log/service.log # real time loging
+
+# sudo nano /etc/rsyslog.conf in debian base system
+
+journalctl -xe
+journalctl -u servince_name.service
+# the systemd-journald.service is the service responble of loging 

@@ -1,0 +1,27 @@
+c
+b
+e
+w
+C-w w
+
+y5j
+
+_
+$
+0
+
+Copy the entire file:
+
+    Go to the first line of the file by pressing gg.
+
+    Enter Visual Line mode by pressing V.
+
+    Go to the end of the file by pressing G.
+
+    Yank (copy) the selected text by pressing y.
+
+Alternatively, you can use the following command in Normal mode:
+vim
+Copy
+
+:%y

@@ -1,0 +1,4 @@
+tar -cvf archive.tar file1 file2 file3
+tar -tvf archive.tar
+tar -xvf archive.tar
+tar -xvf archive.tar.gz -C /path/destination_to_extract

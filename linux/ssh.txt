@@ -1,0 +1,10 @@
+ssh-keygen -t rsa -b 4096 -C "abdellaouiamir27@gmail.com" -f ~/.ssh/github_rsa
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/github_rsa
+ssh-add -l
+ssh-add -d ~/.ssh/github_rsa
+ssh-add -D
+ssh -T git@github.com
+# *.rsa for private # *.pub for public key
+ssh-keygen -p -f ~/.ssh/github_rsa
+ssh-keygen -p -f ~/.ssh/github_rsa -N ""

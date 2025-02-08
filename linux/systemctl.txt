@@ -1,0 +1,112 @@
+systemctl start servicename.service
+systemctl stop servicename.service
+systemctl status servicename.service
+
+systemctl restart servicename.service
+systemctl reload servicename.service
+
+systemctl list-units --all
+
+
+
+#Add third party command to be managed by systemd
+/etc/systemd/system/servicename.service
+/run/systemd/system/servicename.service
+/lib/systemd/system/servicename.service
+systemctl edit servicename.service
+systemctl show -p FragmentPath <service-name>.service
+# reread all the units fils
+systemctl daemon-reload
+
+################## systemctl --user
+Created symlink '/home/amir/.config/systemd/user/default.target.wants/ssh-agent.service' → '/usr/lib/systemd/user/ssh-agent.service'.
+
+
+systemctl poweroff
+systemctl halt
+systemctl reboot
+
+
+systemctl try-restart service.service
+systemctl reload-or-restart service.service
+systemctl try-reload-or-restart service.service
+
+
+systemctl enable service.service
+systemctl reenable service.service
+systemctl disable service.service
+
+
+
+systemctl is-avtive service.service
+systemctl is-enabled service.service
+
+# unit file
+[Unit]
+Description=A brief description of the service
+Documentation=URL or man page reference
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/your-service
+ExecReload=/bin/kill -HUP $MAINPID
+User=your-user
+Group=your-group
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+###
+systemd useit to know if u enable the units when it shoud start when booting by specifying the directory 
+unit for units info and when it should be run in the same directory level
+service , how to start the service and reload it and the user , group that will run under
+
+
+
+# example 
+[Unit]
+Description=Kanata Service
+Requires=local-fs.target
+After=local-fs.target
+
+[Service]
+ExecStartPre=/usr/bin/modprobe uinput
+ExecStart=/usr/bin/kanata -c /etc/kanata/pocket3.kbd
+Restart=no
+
+[Install]
+WantedBy=sysinit.target
+
+
+[Unit]
+Description=Kanata keyboard remapper
+Documentation=https://github.com/jtroo/kanata
+
+[Service]
+Environment=PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
+Environment=DISPLAY=:0
+Type=simple
+ExecStart=/usr/bin/sh -c 'exec $$(which kanata) --cfg $${HOME}/.config/kanata/config.kbd'
+Restart=no
+
+[Install]
+WantedBy=default.target
+
+
+
+
+[Unit]
+Description=Kanata keyboard remapper
+Documentation=https://github.com/jtroo/kanata
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kanata -q --cfg /home/amir/.config/kanata/config.kbd
+Restart=no
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

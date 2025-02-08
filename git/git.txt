@@ -250,7 +250,9 @@ git rebase --continue
 # reuse recorded resolution
 # resolve the conflit automaticly based on preresolved one for the specfic file
 git config --add --local rerere.enabled false # change to true for git to save u previous conflit chose and do it autmaticly
+# clear all the resolution
 # rm -rf .git/rr-cache
+# if u want to delete a specfic resolution search inside the rr-cache folder and delete it
 
 # Squashing
 A-B-C-D

@@ -475,3 +475,13 @@ git branch -u origin/main main
 git push -u origin main 
 git remote set-url origin url
 push origin --delete master
+
+
+
+##################
+# change an old commit in the history 
+git log --oneline
+git rebase -i HEAD~N # the number of commit u want to go back
+# change pick to edit the commit u want to chagnes
+git commit --amend
+git rebase --continue

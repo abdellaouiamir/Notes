@@ -27,6 +27,15 @@ git checkout branch-name
 git branch -d branch-name
 git branch -D branch # force delete branch
 
+# stageing area
+git status
+git add file_path
+git add -p file_path # stage file by hank
+# reset the file not like reset change the HEAD position
+git restore --staged <file>  # Unstage the file
+git restore -p <file>
+git restore <file>           # Discard changes in the working directory
+
 # commit
 git status 
 git add .

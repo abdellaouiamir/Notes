@@ -8,6 +8,8 @@ systemctl reload servicename.service
 systemctl list-units --all
 
 
+# User specifc service
+~/.config/systemd/user/
 
 #Add third party command to be managed by systemd
 /etc/systemd/system/servicename.service
@@ -110,3 +112,16 @@ Group=root
 
 [Install]
 WantedBy=multi-user.target
+
+
+####################
+[Unit]
+Description=Change gnome wallpaper after 5 min
+
+[Service]
+ExecStart=%h/.dotfiles/scripts/random_wall.sh
+Type=simple
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

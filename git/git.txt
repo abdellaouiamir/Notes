@@ -98,6 +98,8 @@ git diff --oneline -p -1 main # the last commit
 # remote
 git remote add origin path # add your remote repository it can be in u system path not url
 git remote rm origin # remote the remote repo
+git remote rename old_name new_name # rename the remote repo
+git remote set-url origin new_url # change the remote repo origin url
 git remote -v # list the remote repo
 git fetch # download the latest changes fron the remote repo # u need to perform merge after fetch
 git fetch origin

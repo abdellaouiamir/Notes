@@ -26,6 +26,9 @@ git switch branch-name
 git checkout branch-name
 git branch -d branch-name
 git branch -D branch # force delete branch
+# manage remote branch
+git push origin branch_name # it will create the branch if it s not exist
+git push --delete origin branch_name # it will delete the remote branch
 
 # stageing area
 git status

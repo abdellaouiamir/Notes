@@ -1,0 +1,2 @@
+rsync -av --include='*/' --include='*.png' --include='*.jpg' --exclude='*' wallpapers ~/wallpapers
+rsync --progress wallpapers ~/Downloads

@@ -3,3 +3,6 @@ echo $USER # global variable
 echo '$test' # $test
 echo "$test" # amir
 test=$(ls) # run the ls command in subshell . in the background and return the standout
+
+# Math
+expr 5 \* 14

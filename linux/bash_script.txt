@@ -6,3 +6,28 @@ test=$(ls) # run the ls command in subshell . in the background and return the s
 
 # Math
 expr 5 \* 14
+# if 
+ech hi && echo agian # to run the secont the fisrt should ge succed
+eco hi ; echo agian # run the two any why
+echo hi || echo agian # if the first work it won runt he second
+
+### example
+#!/bin/bash
+
+mynum=400
+if [ ! $mynum -eq 200 ]
+then
+  echo hi
+else
+  echo "false"
+fi
+
+# [] bash compile it to test command u man the test command to seel all the comparisation
+command="ls"
+if command -v $command
+then
+  echo hi
+else
+  echo "false"
+fi
+

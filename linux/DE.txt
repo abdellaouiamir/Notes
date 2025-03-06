@@ -1,0 +1,27 @@
+hyprland // tailling window manager // catppuccin | sudo pacman -S hyprland
+hyprpaper // wallpaper //  | sudo pacman -S hyprpaper hypridle hyprlock 
+hyprshot // screen shot | yay -S hyprshot
+hyprlock // lock the screen // catppuccin
+hypridle // run script after a timeout
+hyprpicker // color picker
+waybar // bar in the top // catppuccin
+wofi // app luncher | sudo pacman -S wofi waybar
+swaync // notification deamon | sudo pacman -S swaync
+brightnessctl // control brightness brah just read the name | sudo pacman -S brightnessctl
+pactl // control the voulume
+yay -S catppuccin-cursors-mocha
+
+pacman -S wl-clipboard # for test copy and paste
+pacman -S dunct # notification deamon
+pacman -S rofi-wayland # application starter
+pacman -S rofiemoji # application starter
+pacman -S pamixer # control volume
+pacman -S virt-manager # virtual machine
+ttf-jetbrains-mono-nerd
+ttf-jetbrains-mono
+"bibata-cursor-theme-bin", "tela-circle-icon-theme-dracula"
+ttf-hack-nerd
+ttf-fira-code
+xdg-desktop-portal-hyprland
+python3 -m venv --system-site-packages --upgrade-deps .venv
+cliphist

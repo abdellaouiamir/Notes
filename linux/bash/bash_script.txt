@@ -31,3 +31,6 @@ else
   echo "false"
 fi
 
+# exit status
+exit 0 # 1 or higher therse an error
+$?

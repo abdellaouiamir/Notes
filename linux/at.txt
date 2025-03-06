@@ -1,0 +1,70 @@
+# at Command Cheat Sheet for Linux
+
+## Basic Usage
+1. Schedule a command to run at a specific time:
+   at <time>
+   Example:
+   at 14:30
+
+2. Run a command at a specific time:
+   echo "command" | at <time>
+   Example:
+   echo "ls -l > output.txt" | at 15:00
+
+3. Run a script at a specific time:
+   at <time> -f /path/to/script.sh
+   Example:
+   at 16:00 -f /home/user/myscript.sh
+
+## Time Formats
+- Absolute Time:
+  - HH:MM (e.g., 14:30 for 2:30 PM)
+  - midnight, noon, teatime (4 PM)
+  - MMDDYY, MM/DD/YY, DD.MM.YY (e.g., 102523 for October 25, 2023)
+
+- Relative Time:
+  - now + X minutes/hours/days/weeks (e.g., now + 2 hours)
+  - tomorrow (same time tomorrow)
+
+## Common Options
+- List scheduled jobs:
+  atq
+  or
+  at -l
+
+- Remove a scheduled job:
+  atrm <job_id>
+  Example:
+  atrm 5
+
+- View the contents of a scheduled job:
+  at -c <job_id>
+
+- Run a job in a specific queue:
+  at -q <queue> <time>
+  (Queues are letters a-z, with higher letters having lower priority.)
+
+## Examples
+1. Schedule a job to run at 10 PM:
+   at 22:00
+
+2. Schedule a job to run in 2 hours:
+   at now + 2 hours
+
+3. Schedule a job to run tomorrow at 8 AM:
+   at 8:00 tomorrow
+
+4. Schedule a job to run on October 31, 2023, at 9 PM:
+   at 9:00 PM 103123
+
+5. List all scheduled jobs:
+   atq
+
+6. Delete a job with ID 3:
+   atrm 3
+
+## Notes
+- The `at` command relies on the `atd` service. Ensure it is running:
+  sudo systemctl status atd
+
+- Jobs are executed in the user's environment, so environment variables and paths are preserved.

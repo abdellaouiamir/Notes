@@ -125,3 +125,29 @@ Restart=on-failure
 
 [Install]
 WantedBy=default.target
+
+
+###################'
+# systemd timer
+
+[Unit]
+Description=Run My Custom Script Every 5 Minutes
+
+[Timer]
+OnUnitActiveSec=5m
+OnBootSec=5m
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+###############
+[Unit]
+Description=Change wallpaper
+
+[Service]
+ExecStart=%h/.local/bin/wallchange.sh
+Type=simple
+
+[Install]
+WantedBy=default.target
+

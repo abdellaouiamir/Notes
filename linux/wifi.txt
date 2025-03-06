@@ -1,0 +1,87 @@
+# Wi-Fi Management Script
+# This script provides a collection of commands for managing Wi-Fi from the CLI.
+
+# 1. Check NetworkManager status
+nmcli general status
+
+# 2. List available Wi-Fi networks
+nmcli device wifi list
+
+# 3. Connect to a Wi-Fi network
+# nmcli device wifi connect <SSID> password <PASSWORD>
+
+# 4. Disconnect from Wi-Fi
+# nmcli device disconnect <INTERFACE>
+
+# 5. View saved connections
+nmcli connection show
+
+# 6. Delete a saved connection
+# nmcli connection delete <CONNECTION_NAME>
+
+# 7. Enable/Disable Wi-Fi
+# nmcli radio wifi on  # Enable Wi-Fi
+# nmcli radio wifi off # Disable Wi-Fi
+
+# 8. Scan for available Wi-Fi networks using `iw`
+# iw dev <INTERFACE> scan | grep SSID
+
+# 9. Check Wi-Fi interface status using `iw`
+# iw dev <INTERFACE> link
+
+# 10. Connect to a Wi-Fi network using `wpa_supplicant`
+echo "10. Connecting to a Wi-Fi network using `wpa_supplicant`..."
+# wpa_passphrase <SSID> <PASSWORD> > /etc/wpa_supplicant.conf
+# wpa_supplicant -i <INTERFACE> -c /etc/wpa_supplicant.conf -B
+# dhclient <INTERFACE>
+
+# 11. List network interfaces using `ip`
+echo "11. Listing network interfaces using `ip`..."
+ip link show
+
+# 12. Bring up/down a Wi-Fi interface
+# Replace <INTERFACE> with your Wi-Fi interface name (e.g., wlan0)
+echo "12. Bringing up/down a Wi-Fi interface..."
+# ip link set <INTERFACE> up   # Bring up
+# ip link set <INTERFACE> down # Bring down
+
+# 13. List wireless devices using `rfkill`
+echo "13. Listing wireless devices using `rfkill`..."
+rfkill list
+
+# 14. Enable/Disable Wi-Fi using `rfkill`
+echo "14. Enabling/Disabling Wi-Fi using `rfkill`..."
+# rfkill unblock wifi  # Enable Wi-Fi
+# rfkill block wifi    # Disable Wi-Fi
+
+# 15. Check Wi-Fi interface status using `iwconfig`
+echo "15. Checking Wi-Fi interface status using `iwconfig`..."
+iwconfig
+
+# 16. Set ESSID (Network Name) using `iwconfig`
+# Replace <INTERFACE> and <SSID> with your Wi-Fi interface and network name
+echo "16. Setting ESSID using `iwconfig`..."
+# iwconfig <INTERFACE> essid <SSID>
+
+# 17. Set encryption key using `iwconfig`
+# Replace <INTERFACE> and <PASSWORD> with your Wi-Fi interface and password
+echo "17. Setting encryption key using `iwconfig`..."
+# iwconfig <INTERFACE> key <PASSWORD>
+
+# 18. Open `nmtui` for a text-based UI
+echo "18. Opening `nmtui` for a text-based UI..."
+# nmtui
+
+# 19. Restart NetworkManager
+echo "19. Restarting NetworkManager..."
+# sudo systemctl restart NetworkManager
+
+# 20. Check Wi-Fi-related logs using `journalctl`
+echo "20. Checking Wi-Fi-related logs using `journalctl`..."
+journalctl -xe | grep -i wifi
+
+# 21. Check loaded Wi-Fi kernel modules
+echo "21. Checking loaded Wi-Fi kernel modules..."
+lsmod | grep wifi
+
+echo "Wi-Fi management script completed."

@@ -43,6 +43,13 @@ systemctl disable service.service
 systemctl is-avtive service.service
 systemctl is-enabled service.service
 
+# list the enable it service and timer for the user service
+systemctl list-unit-files --type=service --state=enabled
+systemctl list-unit-files --type=timer --state=enabled
+
+#
+systemctl list-units --type=service --state=running
+
 # unit file
 [Unit]
 Description=A brief description of the service

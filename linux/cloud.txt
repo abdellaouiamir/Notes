@@ -1,0 +1,34 @@
+# minikube
+
+minikube start --driver=kvm
+minikube stop
+minikube status
+minikube ip
+minikube profile list
+minikube profile profilename # to set the default profile
+minikube start --nodes 2 -p profilename # create new profile
+minikube delete -p profilename
+minikube ssh
+minikube ssh -n node-name
+
+# kubectl
+
+kubectl cluster-info
+kubectl get nodes
+kubectl get namespaces
+
+# pod
+kubectl run podname --image=nginx
+kubectl get pods
+kubectl get pods -A
+kubectl get pods -o wide
+kubectl get pods --namespaces default
+kuberctl describe pod podname
+kubectl delete pod podname
+
+# deployment
+kubectl create deployment name-deployment --image=nginx
+kubectl get deployments
+kubectl get deployments -A
+kubectl scale deployment name-deployment --replicas=5
+kubectl scale deployment name-deployment --replicas=3

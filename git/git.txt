@@ -503,3 +503,10 @@ git rebase --continue
 ################## 
 # restore a delete it file
 git checkout commitish path/to/file # if u didn t specify the commitish it will loaded it from the last commit
+
+###########
+git ls-files # list the files that git track
+git status --ignored # list the ignored files
+git rm --cached file* # remove the git track file
+git restore --staged . # unstage all the staged file in the current directory
+git reset . # life is good 

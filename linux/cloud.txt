@@ -1,3 +1,5 @@
+hostname
+hostname -i
 # minikube
 
 minikube start --driver=kvm

@@ -1,3 +1,16 @@
+######################SSh Github##############
+ssh-keygen -t rsa -b 4096 -C "abdellaouiamir27@gmail.com" -f ~/.ssh/github_rsa
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/github_rsa
+ssh-add -l
+ssh-add -d ~/.ssh/github_rsa
+ssh-add -D
+ssh -T git@github.com
+# *.rsa for private # *.pub for public key
+ssh-keygen -p -f ~/.ssh/github_rsa
+ssh-keygen -p -f ~/.ssh/github_rsa -N ""
+################################################
+################################Wifi##############
 # Wi-Fi Management Script
 # This script provides a collection of commands for managing Wi-Fi from the CLI.
 
@@ -85,3 +98,8 @@ echo "21. Checking loaded Wi-Fi kernel modules..."
 lsmod | grep wifi
 
 echo "Wi-Fi management script completed."
+####################################################
+################################rsync##############
+rsync -av --include='*/' --include='*.png' --include='*.jpg' --exclude='*' wallpapers ~/wallpapers
+rsync --progress wallpapers ~/Downloads
+##################################################3

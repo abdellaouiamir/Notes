@@ -1,3 +1,0 @@
-localctl status
-localctl set-keymap us
-localctl set-x11-keymap us

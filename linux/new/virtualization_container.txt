@@ -1,3 +1,4 @@
+########################Minikube##########################
 hostname
 hostname -i
 # minikube
@@ -34,3 +35,11 @@ kubectl get deployments
 kubectl get deployments -A
 kubectl scale deployment name-deployment --replicas=5
 kubectl scale deployment name-deployment --replicas=3
+################################################################
+####################################Vitrual Machine Manager (kvm)#######
+pacman -S virt-manager
+pacman -S qemu-base
+systemctl start libvirtd
+systemctl enable libvirtd
+usermod -aG kvm,libvirt $USER # to creat virtual machin without root privelege
+#################################################################

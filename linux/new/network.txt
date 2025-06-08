@@ -1,3 +1,18 @@
+#################Basic networkcommand#########
+ss -tulnp  # t:tcp,u:udp,l:listing,n:numeric,p:pid
+netstat -tulnp # same as ss but ss is more modern system
+traceroute www.google.com # trace the packet path to a destination
+ping -c 4 www.google.com
+#DNS
+#cat /etc/resolv.conf
+#nameserver 8.8.8.8
+dig www.google.com
+nslookup www.google.com
+host www.google.com
+#####################SSH###################
+ssh username@hostname_or_ip
+ssh amir@192.168.0.1 -p 3000 -i ~/.ssh/id_rsa # -v for verbose and -N don t run any command usefule for tunneling
+systemctl status ssh # sshd
 ######################SSh Github##############
 ssh-keygen -t rsa -b 4096 -C "abdellaouiamir27@gmail.com" -f ~/.ssh/github_rsa
 eval "$(ssh-agent -s)"
@@ -9,97 +24,41 @@ ssh -T git@github.com
 # *.rsa for private # *.pub for public key
 ssh-keygen -p -f ~/.ssh/github_rsa
 ssh-keygen -p -f ~/.ssh/github_rsa -N ""
+# enable ssh-agent.service to load the key auto to the ram
+systemctl --user enable ssh-agent.service
 ################################################
 ################################Wifi##############
 # Wi-Fi Management Script
-# This script provides a collection of commands for managing Wi-Fi from the CLI.
-
-# 1. Check NetworkManager status
 nmcli general status
-
-# 2. List available Wi-Fi networks
 nmcli device wifi list
-
-# 3. Connect to a Wi-Fi network
-# nmcli device wifi connect <SSID> password <PASSWORD>
-
-# 4. Disconnect from Wi-Fi
-# nmcli device disconnect <INTERFACE>
-
-# 5. View saved connections
+nmcli device wifi connect <SSID> password <PASSWORD>
+nmcli device disconnect <INTERFACE>
 nmcli connection show
+nmcli connection delete <CONNECTION_NAME>
+nmcli radio wifi on  # Enable Wi-Fi
+nmcli radio wifi off # Disable Wi-Fi
 
-# 6. Delete a saved connection
-# nmcli connection delete <CONNECTION_NAME>
-
-# 7. Enable/Disable Wi-Fi
-# nmcli radio wifi on  # Enable Wi-Fi
-# nmcli radio wifi off # Disable Wi-Fi
-
-# 8. Scan for available Wi-Fi networks using `iw`
-# iw dev <INTERFACE> scan | grep SSID
-
-# 9. Check Wi-Fi interface status using `iw`
-# iw dev <INTERFACE> link
-
-# 10. Connect to a Wi-Fi network using `wpa_supplicant`
-echo "10. Connecting to a Wi-Fi network using `wpa_supplicant`..."
-# wpa_passphrase <SSID> <PASSWORD> > /etc/wpa_supplicant.conf
-# wpa_supplicant -i <INTERFACE> -c /etc/wpa_supplicant.conf -B
-# dhclient <INTERFACE>
-
-# 11. List network interfaces using `ip`
-echo "11. Listing network interfaces using `ip`..."
 ip link show
-
-# 12. Bring up/down a Wi-Fi interface
-# Replace <INTERFACE> with your Wi-Fi interface name (e.g., wlan0)
-echo "12. Bringing up/down a Wi-Fi interface..."
 # ip link set <INTERFACE> up   # Bring up
 # ip link set <INTERFACE> down # Bring down
-
-# 13. List wireless devices using `rfkill`
-echo "13. Listing wireless devices using `rfkill`..."
-rfkill list
-
-# 14. Enable/Disable Wi-Fi using `rfkill`
-echo "14. Enabling/Disabling Wi-Fi using `rfkill`..."
-# rfkill unblock wifi  # Enable Wi-Fi
-# rfkill block wifi    # Disable Wi-Fi
-
-# 15. Check Wi-Fi interface status using `iwconfig`
-echo "15. Checking Wi-Fi interface status using `iwconfig`..."
-iwconfig
-
-# 16. Set ESSID (Network Name) using `iwconfig`
-# Replace <INTERFACE> and <SSID> with your Wi-Fi interface and network name
-echo "16. Setting ESSID using `iwconfig`..."
-# iwconfig <INTERFACE> essid <SSID>
-
-# 17. Set encryption key using `iwconfig`
-# Replace <INTERFACE> and <PASSWORD> with your Wi-Fi interface and password
-echo "17. Setting encryption key using `iwconfig`..."
-# iwconfig <INTERFACE> key <PASSWORD>
-
-# 18. Open `nmtui` for a text-based UI
-echo "18. Opening `nmtui` for a text-based UI..."
-# nmtui
-
-# 19. Restart NetworkManager
-echo "19. Restarting NetworkManager..."
-# sudo systemctl restart NetworkManager
-
-# 20. Check Wi-Fi-related logs using `journalctl`
-echo "20. Checking Wi-Fi-related logs using `journalctl`..."
+sudo systemctl restart NetworkManager
 journalctl -xe | grep -i wifi
-
-# 21. Check loaded Wi-Fi kernel modules
-echo "21. Checking loaded Wi-Fi kernel modules..."
 lsmod | grep wifi
 
-echo "Wi-Fi management script completed."
 ####################################################
 ################################rsync##############
 rsync -av --include='*/' --include='*.png' --include='*.jpg' --exclude='*' wallpapers ~/wallpapers
 rsync --progress wallpapers ~/Downloads
-##################################################3
+rsync -avzP myfolder/ user@192.168.1.10:/home/user/myfolder/ # -a conserve permisions, -v verbose, -z compress data during transfer, -P for progress
+# u can resume the transfer, just rerun the command
+# Copy using a specific SSH port
+rsync -avz -e "ssh -p 2222" file user@host:/path/ # -e Specify remote shell (e.g. SSH)
+# Mirror a directory and delete extras on remote
+rsync -avz --delete mydir/ user@remote:/backup/mydir/ # --delete Delete files in destination not in source
+#################################################scp###
+# local -> remote
+scp /path/to/file user@remote_host:/path/to/destination/
+# remote -> local
+scp user@remote_host:/path/to/destination/ /path/to/file
+scp -P 2222 -i ~/.ssh/key.rsa file.txt user@host:/home/user/file.txt # -v for verbose -r for directory recursive
+

@@ -510,3 +510,6 @@ git status --ignored # list the ignored files
 git rm --cached file* # remove the git track file
 git restore --staged . # unstage all the staged file in the current directory
 git reset . # life is good 
+#
+git restore --staged file.txt # unstage the changes
+git restore file.txt # remove the changes

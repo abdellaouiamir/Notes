@@ -513,3 +513,9 @@ git reset . # life is good
 #
 git restore --staged file.txt # unstage the changes
 git restore file.txt # remove the changes
+#
+git diff # diff between the worktree and the staged area
+git dif --staged # diff between the staged area and last commit 
+      ||
+git diff --cached # staged or cached who care
+git diff commitish_1 commitish_2 # the changes need it to go from commitish_1 to commitish_2

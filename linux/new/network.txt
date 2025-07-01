@@ -9,6 +9,13 @@ ping -c 4 www.google.com
 dig www.google.com
 nslookup www.google.com
 host www.google.com
+###########################IP################
+ip addr show # ip info
+ip link show # interface info
+ip route show # route table
+ip neigh show # arp
+ip link set enp3s0 up
+ip link set enp3s0 down
 #####################SSH###################
 ssh username@hostname_or_ip
 ssh amir@192.168.0.1 -p 3000 -i ~/.ssh/id_rsa # -v for verbose and -N don t run any command usefule for tunneling

@@ -1,3 +1,30 @@
+#######################Docker######################
+docker ps
+docker ps -a
+docker run --name testPostgres -it --rm -e POSTGRES_PASSWORD=password -v ./test.docker:/wow.txt -p 5432:5400 postgres:latest bash
+docker run --name test -d postgres
+docker images
+docker rmi image-name:tag
+docker rm conatiner-name
+docker volume ls
+docker network ls
+###### Clean system##########3
+docker system prune
+docker system prune -a
+docker image prune
+docker volume prune
+docker network prune
+docker container prune
+
+docker rm -f $(docker ps -aq)      # Remove all containers
+docker rmi -f $(docker images -q)  # Remove all images
+docker volume rm $(docker volume ls -q)  # Remove all volumes
+docker network rm $(docker network ls -q)  # Remove all networks
+##########################Docker Compose ################
+docker compose up -d
+docker compose up
+docker compose down
+docker compose ps
 ########################Minikube##########################
 hostname
 hostname -i

@@ -73,18 +73,6 @@ git merge their_branch
      /
 A - B       ==> A - B - C 
 
-# rebase
-# before rebase
-A - B - C         main
-    \
-     D - E        futre branch
-# after rebase     
-A - B - C            main
-         \
-          D - E      future branch
-# u are in feature branch          
-git rebase main
-          
 # reset
 git reset --soft COMMITHASH # or u can HEAD~1 to go back to the previous commit and the current commit will be stage with the soft option
 git reset --hard # undo all the change and go back to the current commit . it delete the stage. the untracke file are unchanged because git doesn t know about them
@@ -243,57 +231,6 @@ git checkout --theirs path_to_file # to keep thier change the feature branch
 git checkout --ours path_to_file # to keep our changes the cuurent branch
 git add .
 git commit -m "message"
-
-# git rebase conflit
-git rebase main # run it when u are in main 
-# confilt occurent
-git status
-git diff
-# be carfult when resolve the conflit in rebase beacuse HEAD point to the branche u want to rebse to it in this case it s main and thiers for the branch u are in 
-# because rebase when u run it will checkout the branch you wanto to rebase to it and rebase u branch . so rebaser rewrite git history and if the commit of this 
-# doesn t add any value rebase will delete check boot.dev git tutorial in 3:10:00
-git checkout --ours path # for the branch u wan to to rebase to it equvalent to HEAD = ours
-git checkout --thiers path # for u cuurent branch 
-# after resolve the conflit 
-git add .
-git rebase --continue
-## git rebase --abort # git rebase --skip
-!!!!!!!  if u run "git commit -m "message" " insted of running "git rebase --continue " u can relove or undo it by running "git reset --soft HEAD~1"
-
-# git rerere is the most op and hidden feature of git
-# reuse recorded resolution
-# resolve the conflit automaticly based on preresolved one for the specfic file
-git config --add --local rerere.enabled false # change to true for git to save u previous conflit chose and do it autmaticly
-# clear all the resolution
-# rm -rf .git/rr-cache
-# if u want to delete a specfic resolution search inside the rr-cache folder and delete it
-
-# Squashing
-A-B-C-D
-  | / /
-A-x
-# all the commits b,c and d become one commit x .
-git rebase -i HEAD~3 # squashe the last three commit into one commit. it actual create a new commit and rebase it. so thats why we use rebase
-# git will open u editor change the commits u want to squashe and change pick to squash or just s and preserve the commit u want all the commit to squashe into 
-# it it should be the first line commit wich refer to the oldest one in the tree history
-  816  git rebase -i HEAD~3
-  818  git branch -D main
-  819  git branch -m temp_main main
-# git rebase -i HEAD~N # this command will rewrite the last 3 command from the cuurent head
-# if u want to squashe just make sure the first commit set to pick and the other to squashe the inline the oldest to the newest . the first line is the old one
-# example
-    873  git add .
-  874  git status
-  875  git commit -m "M: i mastering the git rebase"
-  877  git rebase -i HEAD~3
-  878  git log --oneline
-  879  git log --oneline -p -1
-  880  clear
-  881  git push origin add_scanner
-  882  git switch main
-  883  git branch -D add_scanner
-  884  git pull origin main
-  885  git log --oneline --graph --parents --all
 
  
 # tips
@@ -489,16 +426,6 @@ git branch -u origin/main main
 git push -u origin main 
 git remote set-url origin url
 push origin --delete master
-
-
-
-##################
-# change an old commit in the history 
-git log --oneline
-git rebase -i HEAD~N # the number of commit u want to go back
-# change pick to edit the commit u want to chagnes
-git commit --amend
-git rebase --continue
 
 ################## 
 # restore a delete it file

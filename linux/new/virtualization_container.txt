@@ -1,8 +1,20 @@
 #######################Docker######################
+# in docker cli / in the left for the host machine and for the right for the container
+# but in the docker compose config file it get converted . in the left for the container and in the right for the host machine
 docker ps
 docker ps -a
 docker run --name testPostgres -it --rm -e POSTGRES_PASSWORD=password -v ./test.docker:/wow.txt -p 5432:5400 postgres:latest bash
+docker run --name my_postgres -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydatabase -p 5432:5432 -v ./myFile.sql:/myFile.sql --rm -it postgres bash
 docker run --name test -d postgres
+docker run --name my_postgres \
+  -e POSTGRES_USER=admin \
+  -e POSTGRES_PASSWORD=password \
+  -e POSTGRES_DB=mydatabase \
+  -p 5432:5432 \
+  -v $(pwd)/myFile.sql:/docker-entrypoint-initdb.d/init.sql \
+  -d postgres
+docker exec -it my_postgres bash
+docker exec -it my_postgres cat /file.txt
 docker images
 docker rmi image-name:tag
 docker rm conatiner-name
@@ -20,6 +32,9 @@ docker rm -f $(docker ps -aq)      # Remove all containers
 docker rmi -f $(docker images -q)  # Remove all images
 docker volume rm $(docker volume ls -q)  # Remove all volumes
 docker network rm $(docker network ls -q)  # Remove all networks
+
+########################## Docker volume ################
+docker cp containerName:/myFile.txt ./myFileOut.txt
 ##########################Docker Compose ################
 docker compose up -d
 docker compose up

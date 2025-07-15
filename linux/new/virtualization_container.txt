@@ -20,6 +20,29 @@ docker rmi image-name:tag
 docker rm conatiner-name
 docker volume ls
 docker network ls
+#######################docker file###############
+VOLUME /etc/tinyproxy # make this location persistent it will stay the same after u restart a container
+EXPOSE 8888  # just for info and told docker to open this port
+
+
+#
+# Dockerfile for tinyproxy
+#
+
+FROM alpine
+MAINTAINER kev <noreply@easypi.pro>
+
+RUN set -xe \
+    && apk add --no-cache tinyproxy \
+    && sed -i -e '/^Allow /s/^/#/' \
+              -e '/^ConnectPort /s/^/#/' \
+              -e '/^#DisableViaHeader /s/^#//' \
+              /etc/tinyproxy/tinyproxy.conf
+
+VOLUME /etc/tinyproxy
+EXPOSE 8888
+
+CMD ["tinyproxy", "-d"]
 ###### Clean system##########3
 docker system prune
 docker system prune -a

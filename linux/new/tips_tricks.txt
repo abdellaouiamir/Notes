@@ -3,3 +3,38 @@ shred file # overwriete the file four time
 
 shred -f -n 10 file # n is the desire number of overwrite and f for permission
 ############################################
+
+set -xe # x for verbose mode show the command befor run it and e for error exit it exit in no zero exit status from any commmand
+
+env
+set # list shell and enviroment variable # shell variable are locale variable for the current shell # env are global pass the child process
+
+export MY_VAR="World"  # Now an environment variable
+MY_VAR="World"  # shell variable
+export MY_VAR # environment variable
+#########################################
+# List all environment variables
+env  
+
+# Run a command with a custom variable
+env MY_VAR=123 bash -c 'echo $MY_VAR'  # Output: 123  
+
+# Run a command with a clean environment
+env -i sh -c 'echo $PATH'  # Output: (empty)  
+
+# Remove a variable for a command
+env -u HOME bash -c 'echo $HOME'  # Output: (empty)
+
+# Enable debugging
+set -x  
+echo "This will be printed with + prefix"  
+set +x  # Disable debugging
+
+# Exit on error
+set -e  
+false  # Script will exit here  
+echo "This won't run"
+
+# Set positional parameters
+set -- "first" "second"  
+echo $1  # Output: first

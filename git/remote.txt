@@ -1,3 +1,17 @@
 # see the upstream for the current branch
 git status -sb
 git branch -vv
+
+# see all the remote repo and thier url
+git remote -v
+
+# origin is just the name of the remote repo u can name it whetever u want for example up-stream
+# manage remote repo # remebre remote repo when they fetched are just branch that represent the remote repo
+git remote add origin http://localhost/ggez.git
+git remote rm origin
+# same same but different
+git remote remove origin
+git remote set-url origin http://localhost/gg.git
+
+# get the lastest changes from the remote repo
+git fetch origin

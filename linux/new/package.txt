@@ -1,0 +1,73 @@
+pacman -Syu
+pacman -S package_name
+pacman -Rns package_name
+sudo pacman -Rsc package_name
+sudo pacman -Rdd package_name
+pacman -Qm
+pacman -U package_name.pkg.tar.zst
+
+
+=== PACMAN CHEAT SHEET (Arch Linux) ===
+
+[SYNTAX]
+sudo pacman -[option] [package_name]
+
+=== INSTALL/UPGRADE ===
+sudo pacman -Syu               # Update system (sync + upgrade)
+sudo pacman -S package         # Install a package
+sudo pacman -Sy package        # Install + refresh db
+sudo pacman -U file.pkg.tar.zst # Install local package
+sudo pacman -S --needed package # Skip if already installed
+
+=== REMOVE ===
+sudo pacman -R package         # Remove package (keep deps)
+sudo pacman -Rs package        # Remove + unused deps
+sudo pacman -Rns package       # Remove + deps + configs
+sudo pacman -Qtdq | sudo pacman -Rns - # Remove orphans
+sudo pacman -Rns $(pacman -Qtdq)
+
+=== SEARCH ===
+pacman -Ss "term"              # Search in repos
+pacman -Qs "term"              # Search installed
+pacman -Qi package             # Package info
+pacman -Ql package             # List package files
+pacman -F "file"               # Find owner of a file
+
+=== QUERY (LOCAL) ===
+pacman -Qe                     # List explicitly installed
+pacman -Qm                     # List foreign (AUR) packages
+pacman -Qdt                    # List unused deps (orphans)
+pacman -Q | wc -l              # Count installed packages
+
+=== MAINTENANCE ===
+sudo pacman -Syy               # Force refresh db
+sudo pacman -Sc                # Clear cache (keep installed)
+sudo pacman -Scc               # Clear ALL cache (aggressive)
+sudo pacman -D --asdeps package # Mark as dependency
+sudo pacman -D --asexplicit package # Mark as explicitly installed
+
+=== TROUBLESHOOTING ===
+sudo pacman -S archlinux-keyring # Fix keyring errors
+sudo pacman -Syu --overwrite '*' # Force overwrite conflicts
+sudo pacman -Fy                 # Update file database
+
+=== SHORTCUTS ===
+-S  Install/Upgrade    -R  Remove    -Q  Query    -F  Files
+-y  Refresh db         -u  Upgrade   -s  Search   -n  No confirm
+
+=== EXAMPLES ===
+1. Install Firefox:      sudo pacman -S firefox
+2. Remove + configs:     sudo pacman -Rns firefox
+3. Search MPV:           pacman -Ss "mpv"
+4. List orphans:         pacman -Qtdq
+5. Clean cache:          sudo pacman -Sc
+
+=== PRO TIPS ===
+- Always run `sudo pacman -Syu` before installing.
+- Use `pactree package` (from pacman-contrib) to see deps.
+- For AUR, use yay/paru (e.g., `yay -S package`).
+- Avoid --noconfirm unless in scripts.
+
+
+sudo pacman -Qqn | sudo pacman -D -k --noconfirm
+

@@ -3,6 +3,9 @@ shred file # overwriete the file four time
 
 shred -f -n 10 file # n is the desire number of overwrite and f for permission
 ############################################
+fc # get the latest command in the default test editor
+fc -l # list the last 10 command
+############################################
 
 set -xe # x for verbose mode show the command befor run it and e for error exit it exit in no zero exit status from any commmand
 

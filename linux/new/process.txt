@@ -30,9 +30,10 @@ command &             # Run command in the background
 jobs -l               # List background jobs
 fg %<job_id>          # Bring job to foreground
 bg %<job_id>          # Resume stopped job in background
-disown %<job_id>    # Detach job from terminal (prevents SIGHUP)
+disown %<job_id>      # Detach job from terminal (prevents SIGHUP)
 disown -a             # Detach all jobs
 nohup command &       # Run process immune to SIGHUP (persists after logout)
+exec command          # Replace the current process with the given process
 
 4. Process Priority
 -------------------

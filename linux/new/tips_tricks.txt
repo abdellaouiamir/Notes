@@ -1,3 +1,6 @@
+//fc
+man ls | nvim
+man ls | nvim -
 #######################Shred################
 shred file # overwriete the file four time
 

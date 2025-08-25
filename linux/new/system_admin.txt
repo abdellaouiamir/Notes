@@ -6,6 +6,7 @@ cfdisk
 # b for bloc charectere device . storage
 ##############################################
 ######################Systemd##############
+systemctl --user list-unit-files --type=service
 systemctl start servicename.service
 systemctl stop servicename.service
 systemctl status servicename.service

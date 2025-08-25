@@ -1,0 +1,13 @@
+#### modules = drivers thery loaded to the kernel
+lspci
+lspci -k # list the module that run for each pci
+lsusb
+lsmod # list all the modules
+modprobe -r module_name # remove a module
+modprobe module_name # insert a module
+
+
+######lsof
+lsof /path/toFile # is will show information about the file if a process open it
+lsof =i # show network files
+lsof -i :80 # show network file listen to port 80

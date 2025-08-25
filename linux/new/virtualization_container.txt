@@ -20,6 +20,15 @@ docker rmi image-name:tag
 docker rm conatiner-name
 docker volume ls
 docker network ls
+#####################docker Clean #########
+docker image prune
+docker volume prune
+docker container prune
+docker volume prune
+docker network prune
+docker system prune
+docker system prune -a
+docker system df -v
 #######################docker file###############
 VOLUME /etc/tinyproxy # make this location persistent it will stay the same after u restart a container
 EXPOSE 8888  # just for info and told docker to open this port

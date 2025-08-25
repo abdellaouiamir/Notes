@@ -69,3 +69,12 @@ scp /path/to/file user@remote_host:/path/to/destination/
 scp user@remote_host:/path/to/destination/ /path/to/file
 scp -P 2222 -i ~/.ssh/key.rsa file.txt user@host:/home/user/file.txt # -v for verbose -r for directory recursive
 
+##############################nmap#########33
+nmap -sS --traceroute 192.168.1.1
+nmap -sn 192.168.1.1
+nmap -sn 192.168.1.0/24
+nmap -A 192.168.1.1
+nmap -A 192.168.1.0/24
+nmap -O 192.168.1.1
+nmap -O 192.168.1.0/24
+

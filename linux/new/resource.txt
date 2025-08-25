@@ -28,8 +28,22 @@ df -i
 lsblk
 cfdisk
 fdisk
+fdisk -l
+fdisk /dev/nvme0n1
+p  # list partitions
+d  # delete partitions
+n  # create partitions
+w  # write the changes
+# take attention to the start and the end for each partion
+### Partition #3 contains a btrfs signature. Do you want to remove the signature? [Y]es/[N]o:   # n to keep old data
+btrfs filesystem resize max /
+partprobe /dev/nvme0n1
 
 
+# btrfs
+btrfs filesystem show /
+btrfs filesystem usage /
+btrfs filesystem resize max /
 
 # clean
 # try ncu

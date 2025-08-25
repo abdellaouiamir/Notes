@@ -2,7 +2,7 @@
 # user  /etc/passwd  /etc/shadow
 # add user
 useradd -m -s /bin/bash -aG group_name user_name
-useradd -m -s /bin/bash -g default_group -G users,input -c "Full Name" -U username
+useradd -m -s /bin/bash -g default_group -G users,input -c "Full Name" -U username # the user doesn t need to bee in the group file of the default group
 useradd -g group_name -s /bin/bash -c "Full Name" -m -d /home/userHome user_name
 useradd -m -aG docker,input -s /bin/zsh -g defaultGroup username  # append to the privous group
 useradd -m -G docker,input -s /bin/zsh -g defaultGroup username    # overwrite the old groups and implent this groups

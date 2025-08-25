@@ -406,9 +406,9 @@ git worktree remove worktree_name
 git worktree prune
 
 # tags
-
-
-
+git tag
+git tag -a v1.0.0 -m "my first tag" commitsh
+git tag -d v1.0.0
 
 ######################################
 git rm --cached <file>

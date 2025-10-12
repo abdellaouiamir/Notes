@@ -1,11 +1,13 @@
-pacman -Syu
-pacman -S package_name
-pacman -Rns package_name
+pacman -Syu # update the package list and upgrade all the packages
+pacman -S package_name # install a package with the latest version
+pacman -Rns package_name # remove a package whit his deppendency
 sudo pacman -Rsc package_name
 sudo pacman -Rdd package_name
-pacman -Qm
-pacman -U package_name.pkg.tar.zst
-
+pacman -Qm # list all the packages that are installed form the aur
+pacman -U package_name.pkg.tar.zst # install a package manualy from .pkg.tar.zst file
+pacman -Qe # list all the explicitly installed packages
+pacman -Qs package_name # search for a package
+pacman -Qi package_name # show information about the package
 
 === PACMAN CHEAT SHEET (Arch Linux) ===
 

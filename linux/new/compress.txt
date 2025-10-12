@@ -1,0 +1,55 @@
+##.tar //Archive multiple files/folders into one file
+//compress
+tar -cvf /path/to/destination/archive.tar file1 file2 directory
+//decompress
+tar -xvf archive.tar //here
+tar -xvf archive.tar -C /path/to/destination/ //destination
+
+##.tar.gz //Archive + compress multiple files
+//compress
+tar -czvf /path/to/destination/archive.tar.gz folder_name
+//decompress
+tar -xzvf archive.tar.gz //here
+tar -xzvf archive.tar.gz -C /path/to/destination/  //destination
+
+##.tar.bz2 //Archive + compress multiple files
+//compress
+tar -cjvf /path/to/destination/archive.tar.gz folder_name
+//decompress
+tar -xjvf archive.tar.gz  //here
+tar -xjvf archive.tar.gz -C /path/to/destination/  //destination
+
+##.zip //Archive + compress multiple files
+//compress
+zip /path/to/destination/archive.zip file1 file2
+zip -r /path/to/destination/archive.zip folder_name file1
+//decompress
+unzip archive.zip //here
+unzip archive.zip -d /path/to/destination/ //destination
+
+##.gz //Compress a single file    # mid compress rate mid execute time
+//compress
+gzip filename #replace the origin file
+gzip -k filename #keep the origin file
+gzip -c filename.gz > /path/to/destination/ # stream the output to stdout
+//decompress
+gunzip filename.gz # same same but different
+gzip -d filename.gz # same same but different
+gunzip -c filename.gz > /path/to/destination/ # stream the output to stdout
+
+##.bz2 //Compress a single file    # hight compress ratio hight execute time
+//compress
+bzip filename #replace the origin file
+bzip -k filename #keep the origin file
+bzip -c filename.bz2 > /path/to/destination/ # stream the output to stdout
+//decompress
+bunzip filename.bz2 # same same but different
+bzip -d filename.bz2 # same same but different
+bunzip -c filename.bz2 > /path/to/destination/ # stream the output to stdout
+
+##.Z //Archive + compress multiple files
+//compress
+compress file.tar
+compress -c file.tar > /path/to/destination
+//decompress
+uncompress file.tar.Z

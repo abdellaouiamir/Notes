@@ -1,3 +1,7 @@
+🔄 Quick Overview of Git Areas
+- HEAD: the last commit.
+- Staging area (index): files marked to be included in the next commit.
+- Working directory: your actual files on disk.
 # Config
 git config --list --local
 git config --list --global
@@ -34,19 +38,26 @@ git push --delete origin branch_name # it will delete the remote branch
 git status
 git add file_path
 git add -p file_path # stage file by hank
-# reset the file not like reset change the HEAD position
+# restore
 git restore --staged <file>  # Unstage the file
 git restore -p <file>
 git restore <file>           # Discard changes in the working directory
+# see RestoreReset.txt file for more information
 
 # commit
 git status 
 git add .
 git commit -m "meesqge"
-git commit --amend --on-edit # commit u changes to the current commit without create a new commit
+git commit --amend --no-edit # commit u changes to the current commit without create a new commit
+# reset
+git reset --soft COMMITHASH # or u can HEAD~1 to go back to the previous commit and the current commit will be stage with the soft option
+git reset --hard # undo all the change and go back to the current commit . it delete the stage. the untracke file are unchanged because git doesn t know about them
+git reset --hard COMMITHASH# undo all the change and go back to the commithash .
+git reset --soft HEAD~1 # reset to the previous commit and stage the changes
+git reset --hard HEAD~1 # reset to the previous commit without stage the chagnes
+# see RestoreReset.txt file for more information
 
 # Log
-git log --oneline
 git log --oneline --graph
 git log --decorate=no
 git log --decorate=full
@@ -54,6 +65,7 @@ git log --oneline --graph --all # log for all the branch
 git log --oneline --graph --decorate --parents
 git log --oneline --graph --decorate --parents branch_name2 branch-name
 git log -p -1 # to see the changes from the previous commit
+git log -- <file> # view file history
 
 # merge
 # in merge git will create a new commit
@@ -73,12 +85,6 @@ git merge their_branch
      /
 A - B       ==> A - B - C 
 
-# reset
-git reset --soft COMMITHASH # or u can HEAD~1 to go back to the previous commit and the current commit will be stage with the soft option
-git reset --hard # undo all the change and go back to the current commit . it delete the stage. the untracke file are unchanged because git doesn t know about them
-git reset --hard COMMITHASH# undo all the change and go back to the commithash .
-git reset --soft HEAD~1 # reset to the previous commit and stage the changes
-git reset --hard HEAD~1 # reset to the previous commit without stage the chagnes
 # diff
 git diff # it will show u the difference between the current working tree
 git diff file_path # the same thing but just for the file u provide it
@@ -105,37 +111,11 @@ git push origin main --force # it force github to rewrite the history of the req
 # github
 git remote add origin url
 git ls-remote 
-
-  471  git remote add https://github.com/abdellaouiamir/test-git.git
-  473  git remote add origin https://github.com/abdellaouiamir/test-git.git
-  474  git remote -v
-  475* nvim git.txt
-  476  git ls-remote
-  477  git push origin main # push the chanege from the branch main to the remote repo origin
-  479  git switch main
-  480  git merge update_dune
-  # branch divergent because the remote main and the local main have different commits
-  483  git config --local pull.rebase false
-  484  git pull origin main
-  485  git log --oneline --graph --parents
-
-  473  git remote add origin https://github.com/abdellaouiamir/test-git.git
-  474  git remote -v
-  475* nvim git.txt
-  476  git ls-remote
-  477  git push origin main
-  479  git switch main
-  480  git merge update_dune
-  483  git config --local pull.rebase false
-  484  git pull origin main
-  485  git log --oneline --graph --parents
-  487  git switch -c add_test
-  488  nvim content.md
-  489  git add .
-  490  git commit -m
-  491  git commit -m "the eleven commit"
-  492  git push origin add_test
-
+git remote -v
+git push origin main
+git config --local pull.rebase false
+git pull origin main
+git log --oneline --graph --parents
 
 # git pull update the current selected branche be carful when u use it it run git merge branch_name to the current branch
 # git pull is the same as running git fetch and then run git merge origin/main
@@ -244,17 +224,6 @@ find .git/objects
 cat .git/refs/heads/main #
 cat .git/refs/heads/add_classic # have the same commit pointer
 git cat-file -p 4fdd # blob for file and tree for directory pri .
-
-
-
-
-
-
-
-
-
-
-
 
 # STASH
 # git stash is git feature that take u staged and unstaged changes and save them as a commit in the stash

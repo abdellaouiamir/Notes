@@ -1,0 +1,36 @@
+# Discard unstaged changes (working directory)
+git restore <file> 
+# Unstage a file (remove it from staging area, but keep working directory)
+git restore --staged <file>
+git reset <file>
+# Move HEAD to a previous commit
+git reset --soft commit #Move HEAD only, keep staging and working directory.
+git reset --hard commit #Reset everything to that commit.
+git reset --mixed commit #(default)Move HEAD + reset staging area, keep working directory.
+# Recover old file from an old commit
+git restore --source <commit> -- <file>
+git checkout <commit> -- <file> # legacy way
+git log -- <file> # view file history
+
+🔍 Summary Table
+| Action                              | git restore                           | git reset                            |
+|-------------------------------------|---------------------------------------|--------------------------------------|
+| Discard unstaged changes            | ✅ git restore <file>                 | ❌ Not used for this                 |
+| Unstage a staged file               | ✅ git restore --staged <file>       | ✅ git reset <file>                  |
+| Move HEAD to a previous commit      | ❌ Not used for this                 | ✅ git reset --soft/mixed/hard       |
+| Discard all changes (hard reset)    | ❌                                    | ✅ git reset --hard                  |
+
+✅ When to Use Which?
+- Use git restore when you want to revert specific files in your working directory or unstage them without affecting commits.
+- Use git reset when you want to move the HEAD or clear the staging area in a more aggressive way.
+
+Exemples
+# reset
+git reset --soft COMMITHASH # or u can HEAD~1 to go back to the previous commit and the current commit will be stage with the soft option
+git reset --hard # undo all the change and go back to the current commit . it delete the stage. the untracke file are unchanged because git doesn t know about them
+git reset --hard COMMITHASH# undo all the change and go back to the commithash .
+git reset --soft HEAD~1 # reset to the previous commit and stage the changes
+git reset --hard HEAD~1 # reset to the previous commit without stage the chagnes
+# restore
+git restore <file> 
+git restore -p <file> # discard by hunk

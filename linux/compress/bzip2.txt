@@ -1,3 +1,0 @@
-# hight compress ratio hight execute time
-bzip archive.tar
-bunzip archive.tar.bz2

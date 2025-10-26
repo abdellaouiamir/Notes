@@ -15,3 +15,6 @@ git remote set-url origin http://localhost/gg.git
 
 # get the lastest changes from the remote repo
 git fetch origin
+
+# clean the remote repo "it will delete and branch that does not exist any more in the remote repo"
+git fetch -p origin

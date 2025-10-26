@@ -1,0 +1,122 @@
+getent group wheel
+find . -maxdepth 1 -mindepth 1 ! -name linux -exec mv {} ./direcotry_name \;
+
+###############################################################################
+# LINUX COMMAND CHEAT SHEET
+###############################################################################
+
+# =============================================================================
+# REMOTE OPERATIONS & FILE TRANSFER
+# =============================================================================
+
+# Secure copy file to remote host
+scp file.txt user@remote:/path/to/destination
+
+# Execute remote command
+ssh user@remote 'command'
+
+# Download and execute script directly
+curl -s http://example.com/script.sh | bash
+wget -qO- http://example.com/script.sh | sh
+
+# =============================================================================
+# SYSTEM INFORMATION & MONITORING
+# =============================================================================
+
+# DNS lookup
+nslookup example.com
+
+# CPU information
+nproc        # Show number of processing units
+lscpu        # Detailed CPU information
+
+# Disk usage analysis
+du -h /var/log 2>/dev/null | sort -k1hr      # Sorted by size
+ls -lh /var/log | sort -k5 -hr | awk '{print $5,"---> " $NF}'
+
+# =============================================================================
+# TEXT PROCESSING & SEARCH
+# =============================================================================
+
+# grep family
+grep pattern file.txt           # Basic search
+fgrep literal_string file.txt   # Fixed string search
+egrep "pattern1|pattern2" file.txt  # Extended regex (OR condition)
+pgrep process_name              # Find process IDs
+pkill process_name              # Kill processes by name
+
+# sed - Stream Editor
+sed 's/old/new/g' file.txt          # Global replacement
+sed '3,5d' file.txt                 # Delete lines 3-5
+sed '/pattern/d' file.txt           # Delete matching lines
+sed '3i\text' file.txt              # Insert before line 3
+sed '3a\text' file.txt              # Append after line 3
+sed -n '12,18p' file.txt            # Print only lines 12-18
+sed '/^$/d' file.txt                # Delete empty lines
+
+# awk - Advanced text processing
+awk '{print $1}' file.txt           # Print first field
+awk -F: '{print $1}' /etc/passwd    # Custom field separator
+awk '/pattern/{print $2}' file.txt  # Print 2nd field of matching lines
+awk 'length($0) > 75' file.txt      # Print lines longer than 75 chars
+awk 'NR==3' file.txt                # Print exactly line 3
+awk '{print $NF}' file.txt          # Print last field
+
+# cut - Field extraction
+cut -d: -f1,6 /etc/passwd       # Fields 1 and 6 using ':' delimiter
+cut -c1-5 file.txt              # Characters 1-5
+cut -b1-3 file.txt              # Bytes 1-3
+
+# =============================================================================
+# SORTING & DATA ANALYSIS
+# =============================================================================
+
+# sort
+sort file.txt                   # Alphabetical sort
+sort -k2 -t: file.txt           # Sort by 2nd field (colon delimiter)
+sort -nr file.txt               # Numerical reverse sort
+
+# uniq (requires sorted input)
+sort file.txt | uniq            # Remove duplicates
+sort file.txt | uniq -c         # Count occurrences
+sort file.txt | uniq -d         # Show only duplicates
+
+# wc - Word count
+wc -l file.txt                  # Line count
+wc -c file.txt                  # Character count
+wc -w file.txt                  # Word count
+
+# =============================================================================
+# FILE OPERATIONS
+# =============================================================================
+
+# Basic commands
+touch file.txt                  # Create empty file
+mkdir dirname                   # Create directory
+rm file.txt                     # Remove file
+rm -r dirname                   # Remove directory recursively
+cp source.txt dest.txt          # Copy file
+mv old.txt new.txt              # Move/rename file
+
+# =============================================================================
+# ADVANCED PIPELINES
+# =============================================================================
+
+# Get the 3rd line of a file
+head -n3 file.txt | tail -n1
+
+# Delete all files except those matching pattern
+rm -rf $(ls | grep -v "pattern")
+
+# Count processes matching pattern
+ps aux | grep -c "[p]attern"
+
+# =============================================================================
+# TIPS & TRICKS
+# =============================================================================
+
+# 1. Combine commands with pipes (|) for powerful processing
+# 2. Use xargs to handle large sets of files
+# 3. Redirect stderr with 2>/dev/null when needed
+# 4. Test file-modifying commands (sed -i, rm) carefully
+# 5. awk is often the most flexible tool for complex text processing

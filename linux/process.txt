@@ -1,0 +1,81 @@
+Linux Process Management Commands Cheat Sheet (Updated)
+======================================================
+
+1. Viewing Processes
+--------------------
+ps aux                # List all running processes (BSD style)
+ps -ef                # List all processes (Unix style)
+ps -u <user>          # Show processes by a specific user
+ps -e --forest        # Show process hierarchy (tree view)
+top                   # Interactive process monitor (real-time)
+htop                  # Enhanced process viewer (install: sudo apt install htop)
+pstree                # Display processes in a tree structure
+pgrep -l <name>       # Find PID by process name
+pidof <process>       # Get PID of a running process
+
+2. Killing Processes & Signals
+------------------------------
+kill <PID>            # Graceful termination (SIGTERM, 15)
+kill -9 <PID>         # Force kill (SIGKILL, 9)
+pkill <name>          # Kill by process name (default: SIGTERM)
+pgrep <name>          # Get process by name
+pkill -9 <name>       # Force kill by name (SIGKILL)
+killall <name>        # Kill all processes with a given name
+Ctrl+C                # Send SIGINT (2) - Interrupt (terminate) foreground process
+Ctrl+Z                # Send SIGTSTP (20) - Suspend (stop) foreground process
+
+3. Background & Foreground Jobs
+-------------------------------
+command &             # Run command in the background
+jobs -l               # List background jobs
+fg %<job_id>          # Bring job to foreground
+bg %<job_id>          # Resume stopped job in background
+disown %<job_id>      # Detach job from terminal (prevents SIGHUP)
+disown -a             # Detach all jobs
+nohup command &       # Run process immune to SIGHUP (persists after logout)
+exec command          # Replace the current process with the given process
+
+4. Process Priority
+-------------------
+nice -n <priority> command  # Start process with custom priority (-20 to 19)
+renice <priority> -p <PID>  # Change priority of a running process
+
+5. System Monitoring
+--------------------
+free -h               # Check memory usage
+vmstat               # System performance stats
+iostat               # CPU & disk I/O stats
+dmesg                # Kernel logs (debugging)
+lsof -i :<port>      # Find which process uses a port
+uptime               # System uptime & load average
+
+6. Network-Related
+------------------
+netstat -tulnp       # List processes using ports (older)
+ss -tulnp            # Modern alternative to netstat
+fuser -v <port>/tcp  # Identify processes using a port
+
+7. Systemd (Service Management)
+-------------------------------
+systemctl start <service>    # Start a service
+systemctl stop <service>     # Stop a service
+systemctl restart <service>  # Restart a service
+systemctl status <service>   # Check service status
+systemctl enable <service>  # Enable at boot
+systemctl disable <service> # Disable at boot
+journalctl -u <service>     # View logs for a service
+
+8. Advanced
+-----------
+chrt                  # Change real-time scheduling
+taskset -c 0,1 command # Run process on specific CPU cores
+strace -p <PID>       # Trace system calls of a process
+
+======================================================
+Key Signals:
+- SIGINT (2)  : Ctrl+C (Interrupt)
+- SIGTSTP (20): Ctrl+Z (Suspend)
+- SIGTERM (15): Graceful termination (default for `kill`)
+- SIGKILL (9) : Force kill (unstoppable)
+- SIGHUP (1)  : Terminal hangup (disown/nohup prevents this)
+

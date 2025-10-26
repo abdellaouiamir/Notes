@@ -1,0 +1,12 @@
+git status --ignored
+
+git ls-files -o -i --exclude-standard
+# -o | --others  show untracked files
+# -i show ignored files
+# --exclude-standard uses .gitignore to see the ignored file
+# --exclude accept format to see the ignored file
+# --exclude-from uses given file path to see the ignored file
+
+
+git ls-files 
+# show the tracked git files

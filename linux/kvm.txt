@@ -1,5 +1,0 @@
-pacman -S virt-manager
-pacman -S qemu-base
-systemctl start libvirtd
-systemctl enable libvirtd
-usermod -aG kvm,libvirt $USER # to creat virtual machin without root privelege

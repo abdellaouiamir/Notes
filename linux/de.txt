@@ -25,3 +25,4 @@ ttf-fira-code
 xdg-desktop-portal-hyprland
 python3 -m venv --system-site-packages --upgrade-deps .venv
 cliphist
+

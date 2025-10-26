@@ -1,0 +1,154 @@
+###################Users#########
+# user  /etc/passwd  /etc/shadow
+# add user
+useradd -m -s /bin/bash -aG group_name user_name
+useradd -m -s /bin/bash -g default_group -G users,input -c "Full Name" -U username # the user doesn t need to bee in the group file of the default group
+useradd -g group_name -s /bin/bash -c "Full Name" -m -d /home/userHome user_name
+useradd -m -aG docker,input -s /bin/zsh -g defaultGroup username  # append to the privous group
+useradd -m -G docker,input -s /bin/zsh -g defaultGroup username    # overwrite the old groups and implent this groups
+useradd -M -s /bin/bash username
+useradd -M -r -s /bin/nologin system_user_name # crate a system account
+useradd -r -s /bin/nologin username
+# r for create system account / m create user with home folder / M create user without home folder
+# change user
+usermod -aG docke,input -g defaultgroup username
+usermod -G sudo username 
+chsh -s /bin/zsh
+# delete user
+userdel username
+userdel -r -f username # r for delte home directory for the user and f to force delete when the user is logged in or have same running process under his account
+
+# useradd and usermod options
+              useradd | usermod
+-u UID	      ✅	      ✅	      Set or change the user ID (UID).
+-g GROUP	    ✅	      ✅	      Set or change the primary group.
+-G GROUPS	    ✅	      ✅	      Add user to additional groups (comma-separated).
+-c "Comment"	✅	      ✅	      Add or change a comment (full name, description).
+-d /home/path	✅	      ✅	      Set or change the home directory.
+-s /bin/bash	✅	      ✅	      Set or change the shell.
+-e YYYY-MM-DD	✅	      ✅	      Set or change account expiration date.
+-f DAYS	      ✅	      ✅	      Set or change days before permanent lock after password expires.
+-m	          ✅	      ❌	      Create a home directory (only in useradd).
+-U	          ✅	      ❌	      Create a group with the same name as the user (only in useradd).
+-L	          ❌	      ✅	      Lock a user account (disable login).
+-U	          ❌	      ✅	      Unlock a locked user account.
+-a	          ❌	      ✅	      Append to additional groups (used with -G).
+-l newname	  ❌	      ✅	      Change the username.
+-p PASSWORD	  ✅	      ✅	      Set or change the password (encrypted format).
+
+# password
+# change password
+passwd
+passwd username # for root user
+#chpasswd
+echo "username:password" | sudo chpasswd # change user password
+# chage
+chage -m[mindays] -M[maxdays] -d[lastday] -I[inactive] -E[expiredate] -W[warndays] user_name
+chage -m 5 -M 15 -W 4 -I 3 ironman 
+-d DATE	Set the last password change date (format: YYYY-MM-DD).	sudo chage -d 2024-01-01 john
+-E DATE	Set the account expiration date (format: YYYY-MM-DD).	sudo chage -E 2025-01-01 john
+-I DAYS	Set the inactive days before the account is locked after password expiration.	sudo chage -I 30 john
+-m DAYS	Set the minimum number of days before a password can be changed.	sudo chage -m 7 john
+-M DAYS	Set the maximum number of days before a password must be changed.	sudo chage -M 90 john
+-W DAYS	Set the warning period before password expiration.	sudo chage -W 14 john
+-l	Show the current password aging information for a user.	sudo chage -l john
+
+sudo nano /etc/security/pwquality.conf
+minlen = 12             # Minimum password length
+dcredit = -1            # At least 1 digit
+ucredit = -1            # At least 1 uppercase letter
+lcredit = -1            # At least 1 lowercase letter
+ocredit = -1            # At least 1 special character
+
+# group  /etc/group /etc/gshadow
+
+groupadd -g group_id group_name
+groupdel group_name
+groupmod -g group_id group_name
+groupmod -n group_old_name group_new_name
+gpasswd -d user_name group_name # delete a user from a group
+
+######################sudo
+sudo -u username command
+sudo vim /etc/sudoers
+%wheel All=(All) All
+%kali-trusted   ALL=(ALL:ALL) NOPASSWD: ALL
+#
+sudoers 
+% for groups
+no % for user
+if a file inside a folder you have it you can delete any file in not yours  
+#
+Defaults !tty_tickets // prevent give many time root passwd
+# make user abdel to use sudo
+sudo useradd -m -G wheel -s /bin/bash emma # if it not work try changing the wheel to sudo
+
+### info
+id
+groups
+whoami
+w
+who
+last
+su # switch user # su - # used for root
+finger/pinky
+users
+wall
+write
+tty
+hostname
+hostname -f
+uname -a
+tty
+dmidecode
+watch
+ss -tan
+netstat -ltpn
+ls -l /dev/pts
+ls -l /dev
+
+####################etc file##################
+cat /etc/passwd | grep -vE "nologin|false|sync"
+cat /etc/group
+cat /etc/shadow
+cat /etc/sudoers
+cat /etc/login.def
+acountname:x:acc_id:group_id:group:usrname,ef,fe,ef:/home/acountname:/bin/bash
+groupname:x:grup_id:user1,user2
+##### getent
+sudo getent shadow khalil2
+khalil2:!:20298:0:99999:7:::
+# ! no passwd set
+getent shadow amir
+amir:$y$j9T$Opj5JQMwWjEVooZxV2vWE.$Ej.LbZ1RuxVqXAB3LwlHzSzHPnR6wJERGTL3bMqjGI1:20114:0:99999:7:::
+
+# logs 
+sudo tail -f /var/log/auth.log
+watch tail /var/log/auth.log
+grep sudo /var/log/secure // sentOS
+
+###############################file permission##############
+umask    // show the default permission // 666 for any file 777 for any directory 
+umask // by default umask set 022 minus write // how umask work 666 - 022 // 777 - 022
+umask 033 // set the umask to 033
+chmod u+xw,g-x file   // a stand for user and group and other
+chmod 644 file
+chmod 755 folder
+#folder need x to get enter because it s an exutable file that containt a list of inode to its content
+
+chown user file  // chown root:root file   -R recursice option
+chgrp group file
+
+################################factl#############################
+// set w to file with setfacl doesn t mean you can delete the file
+setfacl -m u:user:rwx /path/to/file   // modfy or add 
+
+setfacl -m g:group:rw /path/to/file    // modfy or add 
+
+setfacl -Rm "entry" /path/to/dir    // modfy or add to a folder
+
+setfacl -x u:user /path/to/file // for remove a specific user or group
+
+setfacl -b /path/to/file  // for remove every thing 
+
+getfacl

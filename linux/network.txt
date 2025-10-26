@@ -1,0 +1,80 @@
+#################Basic networkcommand#########
+ss -tulnp  # t:tcp,u:udp,l:listing,n:numeric,p:pid
+netstat -tulnp # same as ss but ss is more modern system
+traceroute www.google.com # trace the packet path to a destination
+ping -c 4 www.google.com
+#DNS
+#cat /etc/resolv.conf
+#nameserver 8.8.8.8
+dig www.google.com
+nslookup www.google.com
+host www.google.com
+###########################IP################
+ip addr show # ip info
+ip link show # interface info
+ip route show # route table
+ip neigh show # arp
+ip link set enp3s0 up
+ip link set enp3s0 down
+#####################SSH###################
+ssh username@hostname_or_ip
+ssh amir@192.168.0.1 -p 3000 -i ~/.ssh/id_rsa # -v for verbose and -N don t run any command usefule for tunneling
+systemctl status ssh # sshd
+######################SSh Github##############
+ssh-keygen -t rsa -b 4096 -C "abdellaouiamir27@gmail.com" -f ~/.ssh/github_rsa
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/github_rsa
+ssh-add -l
+ssh-add -d ~/.ssh/github_rsa
+ssh-add -D
+ssh -T git@github.com
+# *.rsa for private # *.pub for public key
+ssh-keygen -p -f ~/.ssh/github_rsa
+ssh-keygen -p -f ~/.ssh/github_rsa -N ""
+# enable ssh-agent.service to load the key auto to the ram
+systemctl --user enable ssh-agent.service
+################################################
+################################Wifi##############
+# Wi-Fi Management Script
+nmcli general status
+nmcli device wifi list
+nmcli device wifi connect <SSID> password <PASSWORD>
+nmcli device disconnect <INTERFACE>
+nmcli connection show
+nmcli connection delete <CONNECTION_NAME>
+nmcli radio wifi on  # Enable Wi-Fi
+nmcli radio wifi off # Disable Wi-Fi
+
+ip link show
+# ip link set <INTERFACE> up   # Bring up
+# ip link set <INTERFACE> down # Bring down
+sudo systemctl restart NetworkManager
+journalctl -xe | grep -i wifi
+lsmod | grep wifi
+
+####################################################
+################################rsync##############
+rsync -av --include='*/' --include='*.png' --include='*.jpg' --exclude='*' wallpapers ~/wallpapers
+rsync --progress wallpapers ~/Downloads
+rsync -avzP myfolder/ user@192.168.1.10:/home/user/myfolder/ # -a conserve permisions, -v verbose, -z compress data during transfer, -P for progress
+# u can resume the transfer, just rerun the command
+# Copy using a specific SSH port
+rsync -avz -e "ssh -p 2222" file user@host:/path/ # -e Specify remote shell (e.g. SSH)
+# Mirror a directory and delete extras on remote
+rsync -avz --delete mydir/ user@remote:/backup/mydir/ # --delete Delete files in destination not in source
+#################################################scp###
+# local -> remote
+scp /path/to/file user@remote_host:/path/to/destination/
+# remote -> local
+scp user@remote_host:/path/to/destination/ /path/to/file
+scp -P 2222 -i ~/.ssh/key.rsa file.txt user@host:/home/user/file.txt # -v for verbose -r for directory recursive
+
+##############################nmap#########33
+nmap -sS --traceroute 192.168.1.1
+nmap -sn 192.168.1.1
+nmap -sn 192.168.1.0/24
+nmap -A 192.168.1.1
+nmap -A 192.168.1.0/24
+nmap -O 192.168.1.1
+nmap -O 192.168.1.0/24
+

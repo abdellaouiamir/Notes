@@ -1,3 +1,0 @@
-shred file # overwriete the file four time
-
-shred -f -n 10 file # n is the desire number of overwrite and f for permission

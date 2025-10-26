@@ -78,3 +78,118 @@ nmap -A 192.168.1.0/24
 nmap -O 192.168.1.1
 nmap -O 192.168.1.0/24
 
+
+################################################################CURL######################################################
+#print the output in stout
+curl www.example.com
+curl -X GET https://www.google.com
+curl --get https://www.google.com
+
+#print the output to file
+curl -o ./file.txt www.example.com
+
+# see the header of the response
+curl -i --get www.google.com # with the response
+curl -I --get www.google.com # without the response
+curl --head www.google.com # without the response
+
+# follow the redirection response
+curl --head --location amazon.co.uk
+curl -IL amazon.co.uk
+# verbose mode
+curl -v www.google.com
+
+# download file
+curl -O https://curl.se/logo/curl-logo.svg
+curl -O https://mirror.koddos.net/archlinux/iso/2025.10.01/archlinux-2025.10.01-x86_64.iso 
+# resume download plus you can start download with this command
+curl -C - -O https://mirror.koddos.net/archlinux/iso/2025.10.01/archlinux-2025.10.01-x86_64.iso                              took 3s
+# multiple downloads
+curl -Z -O "https://httpbin.org/image/jpeg" -O "https://httpbin.org/image/png"
+# parallel download
+curl --parallel -O "https://example.com/assets/icon-[01-10].svg"
+
+# post request
+curl -X POST -H "Content-Type:application/json" -d '{"name": "DevOps Toolbox", "skill", "Maybe coffee?"}' https://httpbun.com/post
+curl -X POST -H "Content-Type:application/json" -d '{"name": "DevOps Toolbox", "skill", "Maybe coffee?"}' https://httpbun.com/post | jq
+curl -X POST -H "Content-Type:application/json" -d '{"name": "DevOps Toolbox", "skill", "Maybe coffee?"}' https://httpbun.com/post | jq '.headers'
+curl -X POST -H "Content-Type:application/json" -d '{"name": "DevOps Toolbox", "skill", "Maybe coffee?"}' https://httpbun.com/post | jq '.headers.Via'
+
+#see the time taken by each step
+curl -s -o /dev/null -w " dns_lookup: %{time_namelookup}s connect: %{time_connect}s appconnect: %{time_appconnect}s pretransfer: %{time_pretransfer}s starttransfer: %{time_starttransfer}s --------------------------- total: %{time_total}s http_code: %{http_code} " https://api.github.com
+
+# you can see all the supported protocol
+curl --version
+
+#get the real url
+# use it for safety to reason to make sure you are not redirected
+curl -sIL https://youtu.be/3xmD4E2aqxo?si=IXmmROpPo5VeqkHO | grep location # s for silent
+
+#Rabbit MQ
+# server channel
+curl --output - "mqtt://test.mosquitto.org:1883/demo/hello"
+# client subscriber
+curl -d "hi from curl" "mqtt://test.mosquitto.org:1883/demo/hello"
+
+
+#proxy
+mitmproxy # proxy server installed locally
+curl -x https://localhost:8080 -k https://naas.isalman.dev/no
+
+#HAProxy
+nc -lk 8080
+curl --haproxy-protocol http://localhost:8080
+
+#aws
+curl --request GET "https://dotb-footage.s3.us-east-1.amazonaws.com/" --user "iejfosdajfo" --aws-sigv4 "aws:amz:us-east-1:s3"
+
+#
+curl --silent -X POST -H "Content-Type: application/json" -d '{"name": "DevOps Toolbox", "skill": "may"}' https://httpbun.com/post | jq '.headers."User-Agent"'
+
+#email
+curl -k --url "imaps://localhost:993/INBOX" -u "alice:pass" -X "EXAMINE INBOX"
+curl -v telnel://example.com:80
+
+#dict
+curl "dict://dict.org/d:computer"
+curl "dict://dict.org/d:search-word"
+
+#
+curl ifconfig.me
+curl checkip.amazonaws.com
+curl http://wttr.in/kairouan
+
+
+-X GET == --get
+-I == --head
+-L == --location
+
+| Option / Token                                     |                                  Command(s) | Meaning / description                                                           | Example                                                                        |
+| -------------------------------------------------- | ------------------------------------------: | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| (plain URL)                                        |                      `curl www.example.com` | GET and print response body to stdout                                           | `curl https://example.com`                                                     |
+| `-X GET` / `-X POST`                               |                   `curl -X GET` / `-X POST` | Override request method                                                         | `curl -X POST https://httpbin.org/post`                                        |
+| `--get`                                            |                                `curl --get` | Make request a GET (useful with `-d`)                                           | `curl --get 'https://example.com'`                                             |
+| `-o <file>`                                        |                        `curl -o ./file.txt` | Write response body to file (custom name)                                       | `curl -o page.html https://example.com`                                        |
+| `-O`                                               |                               `curl -O URL` | Save file using remote name                                                     | `curl -O https://example.com/file.iso`                                         |
+| `-i`                                               |                                   `curl -i` | Include HTTP response headers in output (+body)                                 | `curl -i https://example.com`                                                  |
+| `-I` / `--head`                                    |                                   `curl -I` | Fetch HTTP headers only (HEAD request)                                          | `curl -I https://example.com`                                                  |
+| `--location`                                       |                           `curl --location` | Follow redirects (same as `-L`)                                                 | `curl --location http://bit.ly/...`                                            |
+| `-IL`                                              |                                  `curl -IL` | Combine HEAD and follow redirects (show redirect chain)                         | `curl -IL example.com`                                                         |
+| `-v`                                               |                                   `curl -v` | Verbose (debug) output                                                          | `curl -v https://example.com`                                                  |
+| `-C -`                                             |                          `curl -C - -O URL` | Resume a previous download (continue)                                           | `curl -C - -O file.iso`                                                        |
+| `-Z`                                               |                     `curl -Z -O URL -O URL` | Sequential or parallel transfer control (in file uses) / `--parallel` is modern | `curl -Z -O url1 -O url2`                                                      |
+| `--parallel`                                       |                  `curl --parallel -O "..."` | Download multiple files in parallel                                             | `curl --parallel -O "https://.../a[1-5].png"`                                  |
+| `-H "Header: value"`                               |                      set custom HTTP header | `curl -H "Content-Type: application/json" -d '{"a":1}'`                         |                                                                                |
+| `-d`                                               |                       `curl -d '{"k":"v"}'` | Send request body (with POST by default)                                        | `curl -X POST -d '{"name":"x"}' https://httpbin.org/post`                      |
+| `-s`                                               |                                   `curl -s` | Silent mode (no progress meter)                                                 | `curl -s https://example.com`                                                  |
+| `-w`                                               |                          `curl -w "format"` | Write out statistics (timing, http_code, etc.)                                  | `curl -s -o /dev/null -w "time_total: %{time_total}\n" https://api.github.com` |
+| `--version`                                        |                            `curl --version` | Show curl version and supported protocols                                       | `curl --version`                                                               |
+| `-k`                                               |                                   `curl -k` | Insecure: allow insecure server connections (ignore cert errors)                | `curl -k https://self-signed.local`                                            |
+| `-x`                                               |            `curl -x https://localhost:8080` | Use proxy                                                                       | `curl -x http://127.0.0.1:8080 https://example.com`                            |
+| `--haproxy-protocol`                               |                   `curl --haproxy-protocol` | Send HAProxy PROXY protocol header                                              | `curl --haproxy-protocol http://localhost:8080`                                |
+| `--aws-sigv4`                                      | `curl --aws-sigv4 "aws:amz:region:service"` | Sign request with AWS Signature v4                                              | `curl --aws-sigv4 "aws:amz:us-east-1:s3" ...`                                  |
+| `--silent`                                         |                                same as `-s` | Silent mode (used in examples)                                                  | `curl --silent -X POST ...`                                                    |
+| `ifconfig.me` / `checkip.amazonaws.com`            |           endpoints used to fetch public IP | `curl ifconfig.me`                                                              |                                                                                |
+| `http(s)://` / `mqtt://` / `dict://` / `telnet://` |                  URL schemes used with curl | `curl "dict://dict.org/d:computer"`                                             |                                                                                |
+| `--output -`                                       |              `curl --output - "mqtt://..."` | write output to stdout explicitly (`-` = stdout)                                | `curl --output - "mqtt://test.mosquitto.org:1883/demo/hello"`                  |
+

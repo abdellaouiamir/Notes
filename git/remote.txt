@@ -18,3 +18,9 @@ git fetch origin
 
 # clean the remote repo "it will delete and branch that does not exist any more in the remote repo"
 git fetch -p origin
+git fetch --prune origin
+
+# list all branches remote and local
+git branch -a
+# delete remote branch
+git push origin --delete origin/branch

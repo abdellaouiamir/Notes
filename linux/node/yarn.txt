@@ -1,0 +1,6 @@
+yarn global list
+yarn global dir
+yarn global add package
+yarn global remove package
+yarn cache clean
+yarn cache dir

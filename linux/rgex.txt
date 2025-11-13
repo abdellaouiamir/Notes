@@ -1,0 +1,82 @@
+echo "hello world" | rg "hello"
+hello
+
+echo "hello world" | rg "^he"
+he
+
+echo "hello world" | rg "ld$"
+ld
+
+echo "cat hat cut" | rg "c.t"
+cat cut
+
+echo "A B C D" | rg "[A-C]"
+A B C
+
+echo "A B C D" | rg "[^A-C]"
+D
+
+echo "cat bat mat" | rg "[^c]at"
+bat mat
+
+echo "AAA" | rg "A{3}"
+AAA
+echo "AAA" | rg "A{3,5}"
+echo "AAA" | rg "A{,5}"
+
+echo "color colour" | rg "colou?r"
+color colour
+
+echo "color colour" | rg "colou+r"
+colour
+
+echo "color colour colouuuur" | rg "colou*r"
+color colour
+
+echo "Order 123456890 shipped" | rg "\d+"
+123456890
+
+echo "hellow_world42?..." | rg "\w+"
+hellow_world42
+
+echo "cat dog mo" | rg "cat|dog"
+cat dog
+
+echo "gray grey" | rg "gr(a|e)y"
+gray grey
+
+echo "gray grey" | rg "gr[a,e]y"
+gray grey
+
+#email
+echo "Contact us: omar@dotb.sh or admin@test.org" | rg -o '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}'
+omar@dotb.sh
+admin@test.org
+
+#strong password
+echo "thisisMYSUPER@@1234" | rg --pcre2 '`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
+
+
+###################SED####################
+sed -E 's/pattern/replacement/flags' 
+
+echo "hello world\nnot hello\n" | sed -E 's/^hello/hi/'
+hiworld
+not hello
+
+echo "user123" | sed -E 's/[0-9]/#/g'
+user###
+
+echo "a123 b9 c" | sed -E 's/[0-9]+/<NUM>/g'
+echo "color colour" | sed -E 's/colou?r/paint/g'
+echo "cat dog fox" | sed -E 's/(cat|dog)/(pet)/g'
+echo "/src/assets/logo.png" | sed -E 's#/src/assets/(.*)\.png#/assets/\1.webp#'
+echo "eifj.txt feif.txt fei.jpg" | sed -E 's/\b[^ ]+\.txt\b/text/'
+echo "eifj.txt feif.txt fei.jpg" | sed -E 's/\.txt/text/'
+
+
+###################################################
+###### /b
+"hello world"
+Regex: \bhello\b → matches "hello" because it starts at a word boundary and ends at a word boundary.
+Regex: \bwor\b → does not match anything because "wor" is not a whole word (it’s inside "world").

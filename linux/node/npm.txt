@@ -1,0 +1,6 @@
+npm list -g
+npm update -g
+npm install -g package
+npm uninstall -g package
+npm remove -g package
+npm rebuild

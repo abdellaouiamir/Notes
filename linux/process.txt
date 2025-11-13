@@ -1,12 +1,17 @@
+ps -eo user,pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 20
+# uid,pid,ppid,stime,time,tty,cmd,c
+# stime for start time
+ps -u user_name -o user,pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 20
+
 Linux Process Management Commands Cheat Sheet (Updated)
 ======================================================
 
 1. Viewing Processes
 --------------------
 ps aux                # List all running processes (BSD style)
-ps -ef                # List all processes (Unix style)
+ps -ef                # List all processes (Unix style),e for every process in system,f for unix style for custom use o
 ps -u <user>          # Show processes by a specific user
-ps -e --forest        # Show process hierarchy (tree view)
+ps --forest           # Show process hierarchy (tree view)
 top                   # Interactive process monitor (real-time)
 htop                  # Enhanced process viewer (install: sudo apt install htop)
 pstree                # Display processes in a tree structure

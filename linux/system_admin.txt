@@ -1,4 +1,46 @@
-#####################Storage#################3
+#########################logs####################
+# /var/log  by default all the login of the host are saved here
+
+# /etc/logrotate.conf  to configure the rate of archive the log and auto clean the old one
+
+tail -f /var/log/service.log # real time loging
+
+# sudo nano /etc/rsyslog.conf in debian base system
+
+# the systemd-journald.service is the service responble of loging 
+# general logs
+journalctl
+# boot logs
+journalctl -b
+journalctl -b -1
+# latest logs
+journalctl -f
+# show logs of specific service
+journalctl -u servince_name.service
+journalctl -u servince_name.service -f # live logging
+# specify log time window
+journalctl --since "2025-11-13 00:00:00" --until "2025-11-13 23:59:59"
+journalctl --since "2 hours ago"
+# user logs
+journalctl _UID=1000
+# show logs based on priority # -b for the current boot
+journalctl -p 3 -xb  #0:emerg#1:alert#2:crit#3:err#4:warning#5:notice#6:info#7:debug
+# human friendly
+journalctl -o short
+journalctl -o verbose # full details
+#show the most recent -e
+journalctl -xe
+# clean logs automatically
+journalctl --disk-usage
+journalctl --vacuum-size=500M
+journalctl --vacuum-time=2weeks
+journalctl --vacuum-time=7d
+journalctl --vacuum-files=5
+nano /etc/systemd/journald.conf
+systemctl restart systemd-journald
+journalctl --vacuum-time=1s
+#################################################
+#####################Storage#################
 lsblk
 fdisk -l
 cfdisk
@@ -189,19 +231,6 @@ modinfo module_name
 insmod module_name
 rmmod module_name
 ##################################################
-#########################logs####################
-# /var/log  by default all the login of the host are saved here
-
-# /etc/logrotate.conf  to configure the rate of archive the log and auto clean the old one
-
-tail -f /var/log/service.log # real time loging
-
-# sudo nano /etc/rsyslog.conf in debian base system
-
-journalctl -xe
-journalctl -u servince_name.service
-# the systemd-journald.service is the service responble of loging 
-#################################################
 ###################keyboard layout###############
 localctl status
 localctl set-keymap us

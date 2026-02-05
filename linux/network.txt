@@ -36,11 +36,17 @@ ssh-add -d ~/.ssh/github_rsa
 ssh-add -D
 ssh -T git@github.com
 # *.rsa for private # *.pub for public key
+# chane passphrase of private key
 ssh-keygen -p -f ~/.ssh/github_rsa
 ssh-keygen -p -f ~/.ssh/github_rsa -N ""
 # enable ssh-agent.service to load the key auto to the ram
 systemctl --user enable ssh-agent.service
 ################################################
+ss -tulpn # listing port
+ss -tuepn # established port
+ss -tuapn # listning + established
+
+systemd-resolve.service # handel dns query
 ################################Wifi##############
 # Wi-Fi Management Script
 nmcli general status

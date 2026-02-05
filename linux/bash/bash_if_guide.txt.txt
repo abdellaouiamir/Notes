@@ -1,0 +1,162 @@
+Everything You Need to Know About `if` in Bash Scripting
+====================================================
+
+1. Basic Structure
+------------------
+if [ condition ]; then
+    commands
+fi
+
+Example:
+if [ "$USER" = "root" ]; then
+    echo "You are root"
+fi
+
+
+2. if, elif, else
+-----------------
+if [ condition1 ]; then
+    echo "Case 1"
+elif [ condition2 ]; then
+    echo "Case 2"
+else
+    echo "Default case"
+fi
+
+
+3. Forms of Conditions
+----------------------
+a. [ ... ]  → POSIX standard
+b. [[ ... ]] → Bash modern syntax (recommended)
+
+Example:
+if [[ "$name" == "Alice" || "$name" == "Bob" ]]; then
+    echo "Match found"
+fi
+
+
+4. Numeric Comparisons
+----------------------
+-eq : equal
+-ne : not equal
+-lt : less than
+-le : less or equal
+-gt : greater than
+-ge : greater or equal
+
+Example:
+if [ "$x" -gt 10 ]; then
+    echo "x > 10"
+fi
+
+
+5. String Comparisons
+---------------------
+= or == : equal
+!=       : not equal
+-z str   : string is empty
+-n str   : string is not empty
+
+Example:
+if [ -z "$name" ]; then
+    echo "Empty name"
+fi
+
+
+6. File Conditions
+------------------
+-e file : file exists
+-f file : regular file
+-d dir  : directory
+-s file : not empty
+-r file : readable
+-w file : writable
+-x file : executable
+file1 -nt file2 : newer
+file1 -ot file2 : older
+
+Example:
+if [ -f "/etc/passwd" ]; then
+    echo "File exists"
+fi
+
+
+7. Logical Operators
+--------------------
+With [ ]:
+if [ "$a" -gt 5 ] && [ "$b" -lt 10 ]; then ...
+
+With [[ ]]: (preferred)
+if [[ "$a" -gt 5 && "$b" -lt 10 ]]; then ...
+
+&& : AND
+|| : OR
+!  : NOT
+
+
+8. Command Execution in if
+--------------------------
+if command; then
+    echo "Success"
+else
+    echo "Failure"
+fi
+
+Example:
+if ping -c1 google.com &>/dev/null; then
+    echo "Online"
+fi
+
+
+9. One-Liners
+-------------
+[ -f file.txt ] && echo "Exists" || echo "Missing"
+
+
+10. Negation
+------------
+if ! [ -d /etc ]; then
+    echo "Not found"
+fi
+
+
+11. Arithmetic Conditions
+-------------------------
+x=10
+if (( x > 5 && x < 20 )); then
+    echo "Within range"
+fi
+
+
+12. Best Practices
+------------------
+- Always quote variables: "$var"
+- Prefer [[ ... ]] for strings, (( ... )) for numbers
+- Use clear indentation
+- Avoid unquoted variables in [ ... ]
+- Use 'set -e' for strict error handling
+
+
+Example:
+--------
+#!/bin/bash
+file="/etc/passwd"
+user="root"
+num=5
+
+if [[ -f "$file" ]]; then
+    echo "File exists."
+    if grep -q "$user" "$file"; then
+        echo "User found."
+    else
+        echo "User not found."
+    fi
+else
+    echo "File does not exist."
+fi
+
+if (( num >= 1 && num <= 10 )); then
+    echo "Number is within range."
+else
+    echo "Out of range."
+fi

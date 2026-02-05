@@ -1,0 +1,49 @@
+systemd-resolve.service
+
+resolvectl
+nmcli device show
+
+
+####################################################DNSSEC##########################
+[Root Trust Anchor]
+        ↓
+com. DS record
+        ↓
+com. DNSKEY
+        ↓
+cloudflare.com. DS record
+        ↓
+cloudflare.com. DNSKEY (KSK)
+        ↓
+cloudflare.com. DNSKEY (ZSK)
+        ↓
+RRSIG over A records
+
+
+
+
+# Step 0: Check trust anchor
+cat /var/lib/unbound/root.key
+dig . DNSKEY +short
+
+# Step 1: Get DS for .com from root
+dig com. DS +dnssec
+
+# Step 2: Get .com's public key
+dig com. DNSKEY +dnssec
+
+# Step 3: Get DS for google.com from .com
+dig google.com DS +dnssec
+
+# Step 4: Get google.com's public key
+dig google.com DNSKEY +dnssec
+
+# Step 5: Get google.com's nameservers
+dig google.com NS +dnssec
+
+# Step 6: Get www.google.com's IP address
+dig www.google.com A +dnssec
+
+# Bonus: Query through Unbound to see 'ad' flag
+dig www.google.com A +dnssec @127.0.0.1 -p 5335
+

@@ -1,0 +1,5 @@
+fc-list : family | grep -i jetbrains
+fc-cache -fv # f for force and v for verbose
+# paths
+/usr/share/fonts/
+~/.local/share/fonts

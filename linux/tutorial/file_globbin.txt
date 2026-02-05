@@ -1,0 +1,4 @@
+* Match any character any number of times
+? Matches exactly one character
+[] Matches exactly one character inside [] # [14a] match a or 1 or 4
+{} Specify a group of characters for matching # {11,2,3} {1..4}.txt match 11 or 2 or 3
